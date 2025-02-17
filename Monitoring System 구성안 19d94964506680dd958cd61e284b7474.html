@@ -1,0 +1,702 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Monitoring System 구성안</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="19d94964-5066-80dd-958c-d61e284b7474" class="page sans"><header><h1 class="page-title">Monitoring System 구성안</h1><p class="page-description"></p></header><div class="page-body"><p id="19d94964-5066-818b-a05e-dda706465fa2" class="">
+</p><p id="19d94964-5066-81ba-926a-f81200badf61" class="">척도 구성</p><p id="19d94964-5066-8148-952c-c5d1b4d426ee" class="">대분류</p><ul id="19d94964-5066-81e8-bd44-dfc2661f3d06" class="bulleted-list"><li style="list-style-type:disc">인구학적 정보 </li></ul><ul id="19d94964-5066-8130-be9f-f82dab84dcb3" class="bulleted-list"><li style="list-style-type:disc">또래지위와 사회적 행동</li></ul><ul id="19d94964-5066-8106-abf4-dccd1b330633" class="bulleted-list"><li style="list-style-type:disc">또래괴롭힘과 개인심리적 특성</li></ul><ul id="19d94964-5066-81c1-b674-f6425342fbf5" class="bulleted-list"><li style="list-style-type:disc">학업적 적응</li></ul><ul id="19d94964-5066-81e7-9415-c7d48bf794c7" class="bulleted-list"><li style="list-style-type:disc">사회적 관계</li></ul><ul id="19d94964-5066-812e-906d-f12e0c3ed829" class="bulleted-list"><li style="list-style-type:disc">학급분위기</li></ul><ul id="19d94964-5066-8143-af37-da7dcab3e2f1" class="bulleted-list"><li style="list-style-type:disc">교사의 생활지도 역량</li></ul><ul id="19d94964-5066-81b3-845b-c7fdc8415fe3" class="bulleted-list"><li style="list-style-type:disc">종단적 변화 </li></ul><p id="19d94964-5066-810a-8ff3-db211e0c113f" class="">
+</p><p id="19d94964-5066-816e-b602-e27b209cb953" class="">세부 구성 (척도, 문항, 측정방식, 참고문헌)</p><p id="19d94964-5066-8179-b4f3-d3b4e0f218cc" class="">
+</p><p id="19d94964-5066-81bd-8da0-ce1c4a9a763d" class="">인구학적 정보</p><p id="19d94964-5066-8182-bef5-d0f9b486ef81" class="">지역, 학교, 학급, 학년, 반, 번호, 성별 </p><p id="19d94964-5066-813f-9a2e-eae999078ff8" class="">
+</p><p id="19d94964-5066-810e-8f50-e9328b2db7c9" class="">사회적 적응</p><table id="19d94964-5066-8185-a421-e4bd63f8c2c3" class="simple-table"><tbody><tr id="19d94964-5066-8179-9a34-c89e1ffdad54"><td id="Kltl" class="" style="width:103px"></td><td id="K]HS" class="" style="width:121px">척도</td><td id="^=Yl" class="" style="width:331px">문항</td><td id="VL&gt;d" class="" style="width:164px">측정방식</td><td id=";u:I" class="" style="width:78px">문항수</td><td id="a\\A" class="" style="width:204px">참고문헌</td><td id="Bsz:" class="" style="width:91px">비고</td><td id="iSE~" class="">인포그램 페이지</td></tr><tr id="19d94964-5066-81e4-9651-c522da9b773a"><td id="Kltl" class="" style="width:103px">또래지위</td><td id="K]HS" class="" style="width:121px">지각된 인기</td><td id="^=Yl" class="" style="width:331px">PN1. 가장 인기가 있는</td><td id="VL&gt;d" class="" style="width:164px">또래지명</td><td id=";u:I" class="" style="width:78px">1</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px"></td><td id="iSE~" class="">1</td></tr><tr id="19d94964-5066-8189-afd7-eb473d9f69ce"><td id="Kltl" class="" style="width:103px"></td><td id="K]HS" class="" style="width:121px">사회적 선호</td><td id="^=Yl" class="" style="width:331px">PN2. 가장 같이 놀고 싶은<br/>PN3. 가장 같이 놀기 싫은<br/></td><td id="VL&gt;d" class="" style="width:164px">또래지명</td><td id=";u:I" class="" style="width:78px">2</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px">학부모상담</td><td id="iSE~" class="">1</td></tr><tr id="19d94964-5066-8132-a274-d73facf600c0"><td id="Kltl" class="" style="width:103px">사회적 행동</td><td id="K]HS" class="" style="width:121px">외현적 공격성</td><td id="^=Yl" class="" style="width:331px">PN4. 문제를 일으키는/학교의 규칙을 지키지 않는<br/>PN5. 싸움을 하는<br/></td><td id="VL&gt;d" class="" style="width:164px">또래지명</td><td id=";u:I" class="" style="width:78px">2</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px"></td><td id="iSE~" class="">1</td></tr><tr id="19d94964-5066-8148-b91f-e62f58375a02"><td id="Kltl" class="" style="width:103px"></td><td id="K]HS" class="" style="width:121px">관계적 공격성</td><td id="^=Yl" class="" style="width:331px">PN6. 험담을 하거나 다른 친구를 소외시키는<br/>PN7. 나쁜 소문을 퍼뜨리는<br/></td><td id="VL&gt;d" class="" style="width:164px">또래지명</td><td id=";u:I" class="" style="width:78px">2</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px"></td><td id="iSE~" class="">1</td></tr><tr id="19d94964-5066-81c2-9d80-d5604ff169b9"><td id="Kltl" class="" style="width:103px"></td><td id="K]HS" class="" style="width:121px">친사회성</td><td id="^=Yl" class="" style="width:331px">PN8. 친절한<br/>PN9. 협력적인<br/></td><td id="VL&gt;d" class="" style="width:164px">또래지명</td><td id=";u:I" class="" style="width:78px">2</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px"></td><td id="iSE~" class="">1</td></tr><tr id="19d94964-5066-814f-816f-e29cdccd6cab"><td id="Kltl" class="" style="width:103px"></td><td id="K]HS" class="" style="width:121px">인기동기</td><td id="^=Yl" class="" style="width:331px">SR1. 나는 인기있는 아이와 친구가 되고 싶다.                   SR2. 나는 인기있는 무리에 속하고 싶다.                          SR3. 나는 인기있는 사람이 되고 싶다.                             SR4. 나는 인기없는 아이와는 친구가 되고 싶지 않다.           SR5. 나는 인기없는 무리에 속하고 싶지 않다.                  SR6. 나는 인기없는 사람이 되고 싶지 않다.                       (SR1-3: 인기추구, SR4-6: 인기상실불안)</td><td id="VL&gt;d" class="" style="width:164px">자기보고 (리커트 척도)</td><td id=";u:I" class="" style="width:78px">6</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px"></td><td id="iSE~" class="">1</td></tr><tr id="19d94964-5066-8169-9170-f824909bc70e"><td id="Kltl" class="" style="width:103px">또래괴롭힘의 집단역동</td><td id="K]HS" class="" style="width:121px">또래괴롭힘 가해</td><td id="^=Yl" class="" style="width:331px">PN10. 친구를 괴롭히는 행동을 시작하는<br/>PN11. 괴롭힘에 다른 사람을 참여하도록 하는<br/></td><td id="VL&gt;d" class="" style="width:164px">또래지명</td><td id=";u:I" class="" style="width:78px">2</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px"></td><td id="iSE~" class="">2</td></tr><tr id="19d94964-5066-81ca-94ad-e7de4ef4abf4"><td id="Kltl" class="" style="width:103px"></td><td id="K]HS" class="" style="width:121px">또래괴롭힘 피해</td><td id="^=Yl" class="" style="width:331px">PN12. 다른 아이들에게 자주 놀림을 받는<br/>PN13. 다른 아이들에게 맞거나 욕설을 듣는<br/></td><td id="VL&gt;d" class="" style="width:164px">또래지명</td><td id=";u:I" class="" style="width:78px">2</td><td id="a\\A" class="" style="width:204px"></td><td id="Bsz:" class="" style="width:91px"></td><td id="iSE~" class="">2</td></tr><tr id="19d94964-5066-81a9-9a25-ce7f44c01aa2"><td id="Kltl" class="" style="width:103px">사회정서역량</td><td id="K]HS" class="" style="width:121px">공감</td><td id="^=Yl" class="" style="width:331px">SR7. 나는 학교에서 나보다 어려운 친구를 보면 걱정되고 마음이 아프다.<br/>SR8<br/><strong>*. 가끔은 다른 사람이 어려움을 겪고 있더라도, 나는 그렇게 안타까움이나 미안함을 느끼지 않는다.</strong><br/>SR9. 다른 사람을 이용하는 학생과는 친구가 되고 싶지 않다.<br/>SR10<br/><strong>*. 다른 사람의 불행은 나와는 크게 상관이 없는 일이다.<br/>SR11*. 다른 사람이 불공평한 일을 겪어도 나와 관련 없으면 상관없다.<br/></strong><br/>SR12. 나는 종종 내가 본 일에 대해 감동받는다.<br/>SR13. 나는 스스로를 마음이 고운 사람이라고 말할 수 있다.<br/>SR14. 내 생각을 정하기 전에 나와 생각이 다른 친구의 의견을 들어보려고 한다.<br/>SR15<br/><strong>*. 나는 다른 사람의 입장에서 생각하는 것이 어렵다.</strong><br/>SR16. 친구를 욕하기 전에, 그 친구 입장에서 생각해본다.<br/>SR17. 나는 친구들을 더 이해하기 위해서, 친구들의 입장에서 나의 모습이 어떻게 보일지 상상해본다.<br/>SR18<br/><strong>*. 내가 맞다고 생각되면, 다른 사람의 의견을 듣지 않는다.</strong><br/>SR19. 모든 질문은 하나 이상의 답이 있다고 생각하고, 여러 가지 생각을 해본다.<br/>SR20. 화가 났을 때 바로 화내지 않으려 노력한다.                    (*표시된 문항은 역산, 인지적 공감 SR 7 - 13, 정서적 공감 SR 14 - 20)<br/></td><td id="VL&gt;d" class="" style="width:164px">자기보고 (리커트 척도)</td><td id=";u:I" class="" style="width:78px">14</td><td id="a\\A" class="" style="width:204px"> Davis, M. H. (1983). Measuring individual differences in empathy: Evidence for a multidimensional approach. Journal of Personality and Social Psychology, 44(1), 113–126.</td><td id="Bsz:" class="" style="width:91px">학부모상담</td><td id="iSE~" class="">2</td></tr><tr id="19d94964-5066-8148-9ec3-f7da9b3b8264"><td id="Kltl" class="" style="width:103px">정신건강</td><td id="K]HS" class="" style="width:121px">내재화(우울)</td><td id="^=Yl" class="" style="width:331px">SR21. 평상시에는 아무렇지도 않던 일들이 귀찮게 느껴졌다.<br/>SR22. 무슨 일을 하든 정신을 집중하기가 힘들었다.<br/>SR23. 우울했다.<br/>SR24. 하는 일마다 힘들게 느껴졌다.<br/>SR2<br/><strong>5*. 앞으로 잘 될 것이라고 느꼈다.</strong><br/>SR26. 두려움을 느꼈다.<br/>SR27. 잠을 설쳤다, 잠을 잘 이루지 못했다.<br/>SR28<br/><strong>*. 행복했다.</strong><br/>SR29. 세상에 홀로 있는 듯 한 외로움을 느꼈다.<br/>SR30. 도무지 무엇을 시작할 기운이 나지 않았다.                (*표시된 문항은 역산) <br/></td><td id="VL&gt;d" class="" style="width:164px">자기보고 (리커트 척도)</td><td id=";u:I" class="" style="width:78px">10</td><td id="a\\A" class="" style="width:204px">안정숙, 전성균, 한준규, 노경선, Robert Goodman(2003). 한국어판 강점·난점 설문지 (Strengths and Difficulties Questionnaire) 개발. J Korean Neuropsychiatr Assoc 42(1), 141-147.</td><td id="Bsz:" class="" style="width:91px">학부모상담</td><td id="iSE~" class="">2</td></tr><tr id="19d94964-5066-8117-94f7-d91d05b80ffa"><td id="Kltl" class="" style="width:103px">학급맥락</td><td id="K]HS" class="" style="width:121px">또래공동체 의식</td><td id="^=Yl" class="" style="width:331px">SR31. 우리반 친구들은 서로 잘 도와준다.<br/>SR32. 우리 선생님과 반 친구들은 서로를 존중하고 배려한다.<br/>SR33. 우리 반 친구들은 서로 잘 챙겨준다.<br/>SR34. 우리 반 친구들은 서로에게 잘 해준다.<br/><br/><br/><br/></td><td id="VL&gt;d" class="" style="width:164px">자기보고 (리커트 척도)</td><td id=";u:I" class="" style="width:78px">4</td><td id="a\\A" class="" style="width:204px">Gest, S. D., Welsh, J. A., &amp; Domitrovich, C. E. (2005). Behavioral predictors of changes in social relatedness and liking school in elementary school. Journal of school psychology, 43(4), 281-301.</td><td id="Bsz:" class="" style="width:91px">학부모상담</td><td id="iSE~" class="">6</td></tr></tbody></table><p id="19d94964-5066-81f8-8522-e43716878a2e" class="">
+</p><p id="19d94964-5066-81e8-8277-fa0e6b82f7b9" class="">학업적 적응</p><table id="19d94964-5066-8103-8be4-ef769bb05c7b" class="simple-table"><tbody><tr id="19d94964-5066-8121-9c1c-ded983025f65"><td id="X=sW" class="">척도</td><td id="RCW_" class="" style="width:356px">문항</td><td id="B;Wf" class="" style="width:152px">측정방식</td><td id="[Ine" class="" style="width:78px">문항수</td><td id="_P&gt;d" class="" style="width:265px">참고문헌</td><td id="HT^f" class="" style="width:87px">비고</td><td id="V{wN" class="">인포그램 페이지</td></tr><tr id="19d94964-5066-8179-873b-ca2078ec0f3e"><td id="X=sW" class="">수업참여</td><td id="RCW_" class="" style="width:356px">SR35. 나는 학교에서 잘하려고 노력한다.<br/>SR36. 나는 수업 시간에 최대한 열심히 한다.<br/>SR37. 나는 수업에서 하는 토론에 참여한다. <br/>SR38. 나는 수업에 집중한다.<br/>SR39. 나는 수업을 주의 깊게 듣는다.<br/>SR40. 나는 수업 시간에 기분이 좋다.<br/>SR41. 나는 수업에서 무언가를 할 때 흥미를 느낀다.<br/>SR42. 수업은 재미있다.<br/>SR43. 나는 수업에서 새로운 것을 배우는 것을 즐긴다.<br/>SR44. 나는 수업활동에 적극적으로 참여한다.                           (SR 35 - 39: 행동적 참여 , SR 40 -44: 정서적 참여 )<br/></td><td id="B;Wf" class="" style="width:152px">자기보고 (리커트 척도)</td><td id="[Ine" class="" style="width:78px">10</td><td id="_P&gt;d" class="" style="width:265px">Skinner, E. A., Kindermann, T. A., &amp; Furrer, C. J. (2009). A motivational perspective on engagement and disaffection: Conceptualization and assessment of children&#x27;s behavioral and emotional participation in academic activities in the classroom. <em>Educational and psychological measurement</em>, <em>69</em>(3), 493-525.</td><td id="HT^f" class="" style="width:87px">학부모상담</td><td id="V{wN" class="">3</td></tr><tr id="19d94964-5066-819d-9e8c-f48e40839448"><td id="X=sW" class="">사회적 상호의존성</td><td id="RCW_" class="" style="width:356px">SR45. 나는 다른 학생의 학습을 도와주는게 좋다.<br/>SR46. 나는 내 생각이나 준비물을 다른 학생과 공유하는 것을 좋아한다.<br/>SR47. 나는 다른 학생과 협동하는 것을 좋아한다.<br/>SR48. 나는 다른 학생들에게 중요한 것들을 배울 수 있다.<br/>SR49. 모둠 학습에서 내 생각과 준비물을 나누려고 노력한다.<br/>SR50. 학생들은 서로서로 가르쳐주고 배울 수 있다.<br/>SR51. 학습할 때 학생끼리 서로 돕는 것이 좋다고 생각한다.   SR52. 나는 다른 학생보다 더 잘하고 싶다.<br/>SR53. 나는 내가 다른 학생보다 더 좋은 점수를 받기 위해서 공부한다.<br/>SR54. 나는 우리 반에서 최고의 학생이 되고 싶다.<br/>SR55. 나는 남에게 뒤쳐지는 것을 좋아하지 않는다.<br/>SR56. 나는 누가 최고인지 알아보기 위해서 다른 학생과 경쟁(승부를 겨루는 것)하는 것을 좋아한다.<br/>SR57. 나는 다른 학생과 경쟁(승부를 겨루는 것)할 때 가장 행복하다.<br/>SR58. 나는 누가 최고인지 알아보기 위해 도전하는 것을 좋아한다.<br/>SR59. 다른 학생과의 경쟁은 공부하기 위한 좋은 방법이다.       (SR 45 - 51: 협동적 태도, SR 52 - 59: 경쟁적 태도)    <br/></td><td id="B;Wf" class="" style="width:152px">자기보고 (리커트 척도)</td><td id="[Ine" class="" style="width:78px">22</td><td id="_P&gt;d" class="" style="width:265px">Johnson, D. W., &amp; Norem-Hebeisen, A. A. (1979). A measure of cooperative, competitive, and individualistic attitudes. The Journal of Social Psychology, 109(2), 253-261.</td><td id="HT^f" class="" style="width:87px">학부모상담</td><td id="V{wN" class="">3</td></tr><tr id="19d94964-5066-8158-8e84-c4acdaa59cba"><td id="X=sW" class="">교사평정 성취도</td><td id="RCW_" class="" style="width:356px">TR1. 각 학생의 주요과목에 대한 성취도를 평가해주세요. </td><td id="B;Wf" class="" style="width:152px">자기보고 (리커트 척도)</td><td id="[Ine" class="" style="width:78px"></td><td id="_P&gt;d" class="" style="width:265px"></td><td id="HT^f" class="" style="width:87px"></td><td id="V{wN" class="">3</td></tr></tbody></table><p id="19d94964-5066-81c1-b485-e77040c1d252" class="">사회적 관계</p><table id="19d94964-5066-818c-9219-e71fc02e1e4b" class="simple-table"><tbody><tr id="19d94964-5066-8136-b3a9-eeb8fba7a681"><td id="R\nW" class=""></td><td id="gVb{" class="">척도</td><td id="LlZA" class="" style="width:260px">문항</td><td id="q&lt;nV" class="" style="width:150px">측정방식</td><td id="weSA" class="">문항수</td><td id="HtvU" class="" style="width:121px">참고문헌</td><td id="MK``" class="" style="width:162px">비고</td><td id="MKxF" class="">인포그램 페이지</td></tr><tr id="19d94964-5066-81f8-92f9-e0f6afc37bfa"><td id="R\nW" class="">또래네트워크</td><td id="gVb{" class="">친한친구</td><td id="LlZA" class="" style="width:260px">PN14.가장 친한 친구는? </td><td id="q&lt;nV" class="" style="width:150px">또래지명</td><td id="weSA" class="">1</td><td id="HtvU" class="" style="width:121px"></td><td id="MK``" class="" style="width:162px">학부모상담</td><td id="MKxF" class="">4 (지명 받은 수) &amp; 5 (네트워크 그림)</td></tr><tr id="19d94964-5066-810f-aaa7-e4b2590b519b"><td id="R\nW" class=""></td><td id="gVb{" class="">학습친구</td><td id="LlZA" class="" style="width:260px">PN15.같이 공부하는 친구는?</td><td id="q&lt;nV" class="" style="width:150px">또래지명</td><td id="weSA" class="">1</td><td id="HtvU" class="" style="width:121px"></td><td id="MK``" class="" style="width:162px">학부모상담</td><td id="MKxF" class="">4 (지명 받은 수) &amp; 5 (네트워크 그림)</td></tr><tr id="19d94964-5066-81f3-a871-f3912d8ca49f"><td id="R\nW" class=""></td><td id="gVb{" class="">협동학습 친구</td><td id="LlZA" class="" style="width:260px">PN16.공부할 때 도움을 요청하는 친구는?</td><td id="q&lt;nV" class="" style="width:150px">또래지명</td><td id="weSA" class="">1</td><td id="HtvU" class="" style="width:121px"></td><td id="MK``" class="" style="width:162px">학부모상담</td><td id="MKxF" class="">4 (지명 받은 수) &amp; 5 (네트워크 그림)</td></tr><tr id="19d94964-5066-81eb-8716-f116954e8855"><td id="R\nW" class=""></td><td id="gVb{" class="">선망하는 친구</td><td id="LlZA" class="" style="width:260px">PN17.함께 어울리거나, 친구가 되고싶은 사람은?</td><td id="q&lt;nV" class="" style="width:150px">또래지명</td><td id="weSA" class="">1</td><td id="HtvU" class="" style="width:121px"></td><td id="MK``" class="" style="width:162px">학부모상담</td><td id="MKxF" class="">4 (지명 받은 수) &amp; 5 (네트워크 그림)</td></tr><tr id="19d94964-5066-81dd-aff9-f2cff4f44723"><td id="R\nW" class="">교사-학생관계</td><td id="gVb{" class="">교사선호</td><td id="LlZA" class="" style="width:260px">PN18.선생님과 잘 지내는</td><td id="q&lt;nV" class="" style="width:150px">또래지명</td><td id="weSA" class="">1</td><td id="HtvU" class="" style="width:121px"></td><td id="MK``" class="" style="width:162px"></td><td id="MKxF" class="">4 (지명 받은 수) &amp; 5 (네트워크 그림)</td></tr><tr id="19d94964-5066-812a-9070-f63be0b2e38e"><td id="R\nW" class=""></td><td id="gVb{" class="">교사비선호</td><td id="LlZA" class="" style="width:260px">PN19.선생님과 잘 지내지 못하는</td><td id="q&lt;nV" class="" style="width:150px">또래지명</td><td id="weSA" class="">1</td><td id="HtvU" class="" style="width:121px"></td><td id="MK``" class="" style="width:162px"></td><td id="MKxF" class="">4 (지명 받은 수) &amp; 5 (네트워크 그림)</td></tr><tr id="19d94964-5066-81a6-a94f-e4c4058d6773"><td id="R\nW" class="">부모-자녀관계</td><td id="gVb{" class="">양육태도</td><td id="LlZA" class="" style="width:260px">SR60. 부모님은 내가 하고 있는 일들을 중요하게 생각해준다.<br/>SR61. 부모님은 내가 착하게 행동하면 칭찬해준다.<br/>SR62. 부모님은 내가 겁을 내거나 당황할 때, 도와주려고 하신다.<br/>SR63. 부모님은 내가 칭찬받을 일을 하면 칭찬해주신다.<br/>SR64. 부모님은 내가 소중하고 필요한 존재라는 것을 느끼도록 해준다.<br/>SR65. 부모님은 나의 생각들을 존중하고, 내 생각을 표현하도록 북돋아준다.<br/>SR66. 부모님은 일상생활에 관해 나와 같이 이야기하고, 이야기도 들어주신다.<br/>SR67. 부모님은 내가 무언가를 잘했을 때, 나 스스로 자랑스럽게 느끼도록 해준다.<br/>SR68. 부모님은 내가 친구들을 집에 데리고 오는 걸 좋아하고, 친구들에게도 잘해주신다.<br/>SR69. 부모님은 나에게 짜증을 낸다.<br/>SR70. 부모님은 나를 거칠게 대한다.<br/>SR72. 부모님은 내가 잘못하면 바로 혼내신다.<br/>SR72. 부모님은 내가 자신을 신경쓰이게 한다고 말하신다.<br/>SR73. 부모님은 나의 기분을 상하게 한다.<br/>SR74. 부모님은 내가 잘못을 저지를 경우, 윽박지르거나 위협적으로 대한다.<br/>SR75. 부모님은 화가 났을 때 나를 심하게 혼낸다.                                                        (SR 60-68: 애정, SR 69-75: 거부)                   <br/></td><td id="q&lt;nV" class="" style="width:150px">자기보고 (리커트 척도)</td><td id="weSA" class="">16</td><td id="HtvU" class="" style="width:121px">백승진(2008). 대학생이 지각한 부모의 양육태도와 자기명확성의 관계. 숙명여자대학교 대학원 국내석사학위논문.</td><td id="MK``" class="" style="width:162px">학부모상담, 주관식 포함?</td><td id="MKxF" class="">4 (평균점수)</td></tr></tbody></table><p id="19d94964-5066-81ea-8221-d206b8ce7ed9" class="">
+</p><p id="19d94964-5066-8112-810a-c54ac7a24ab8" class="">학급맥락</p><table id="19d94964-5066-8182-828e-db174a346986" class="simple-table"><tbody><tr id="19d94964-5066-8120-8b47-c1fa5c92056a"><td id="WsTR" class="">척도</td><td id="}b~I" class="" style="width:361px">계산방식</td><td id="~LQx" class="" style="width:140px">Item No</td><td id="W;Zt" class="" style="width:101px">비고</td><td id="&gt;TLe" class="" style="width:141px">인포그램 페이지</td></tr><tr id="19d94964-5066-8195-9578-ee42bf6a8f65"><td id="WsTR" class="">또래공동체 의식</td><td id="}b~I" class="" style="width:361px">또래공동체 의식 개인 점수의 학급평균</td><td id="~LQx" class="" style="width:140px">SR 31-34</td><td id="W;Zt" class="" style="width:101px"></td><td id="&gt;TLe" class="" style="width:141px">6</td></tr><tr id="19d94964-5066-81fb-95b2-fa2e29cead69"><td id="WsTR" class="">밀도</td><td id="}b~I" class="" style="width:361px">Rsna 패키지를 활용해서, 친구관계 행렬의 밀도를 계산 (친구지명수/최대로 가능한 지명수)</td><td id="~LQx" class="" style="width:140px">PN 14</td><td id="W;Zt" class="" style="width:101px">주영 for more information. </td><td id="&gt;TLe" class="" style="width:141px">6</td></tr><tr id="19d94964-5066-8181-a84f-e90dd633e1ed"><td id="WsTR" class="">집중화도</td><td id="}b~I" class="" style="width:361px">Rsna 패키지를 활용해서, 친구관계 행렬의 집중화도를 계산 (친구관계 지명의 표준편차계산)</td><td id="~LQx" class="" style="width:140px">PN 14</td><td id="W;Zt" class="" style="width:101px">주영 for more information. </td><td id="&gt;TLe" class="" style="width:141px">6</td></tr><tr id="19d94964-5066-8174-a7e2-c475fcbfe29b"><td id="WsTR" class="">공격성 규범</td><td id="}b~I" class="" style="width:361px">또래지명으로 측정된 공격성*친구관계 가중치의 학급평균치</td><td id="~LQx" class="" style="width:140px">PN 4-7 &amp; PN 14</td><td id="W;Zt" class="" style="width:101px"></td><td id="&gt;TLe" class="" style="width:141px">6</td></tr><tr id="19d94964-5066-81bc-bd80-c961ade58aaa"><td id="WsTR" class="">친사회성 규범</td><td id="}b~I" class="" style="width:361px">또래지명으로 측정된 친사회성*친구관계 가중치의 학급평균치</td><td id="~LQx" class="" style="width:140px">PN 8 -9 &amp; PN 14</td><td id="W;Zt" class="" style="width:101px"></td><td id="&gt;TLe" class="" style="width:141px">6</td></tr></tbody></table><p id="19d94964-5066-8171-b1bd-fc6c7502feae" class="">교사역량</p><table id="19d94964-5066-8159-aad8-c00e9e3b6ce7" class="simple-table"><tbody><tr id="19d94964-5066-81d4-bdff-c4c7ee946573"><td id="i=`h" class="">척도</td><td id="~r|r" class="" style="width:449.3125px">문항</td><td id="WG&lt;L" class="">측정방식</td><td id="|t}R" class="" style="width:182px">참고문헌</td><td id="v:fM" class="">비고</td><td id="jn:S" class="">인포그램 페이지 7</td></tr><tr id="19d94964-5066-8102-a6b6-da0b27391c7b"><td id="i=`h" class="">사회적 역동 관리</td><td id="~r|r" class="" style="width:449.3125px">TSR1. 나는 인기있는 학생의 영향력이 과하게 나타나지 않도록 학급 환경을 조성한다. ( 예: 인기를 얻을 수 있는 다양한 방법을 제시하기, 다양한 재능과 능력의 가치 강조하기)<br/>TSR2. 나는 인기가 없는 학생도 친구들로부터 인정을 받을 수 있는 기회를 만들어 준다. (예: 인기가 없는 학생에게 리더역할을 부여해주기, 친구들 앞에서 인정해주기, 다른 아이들에게 그들의 장점 부각시키기)<br/>TSR3. 나는 인기가 없는 학생들에게 친구들로부터 인기를 얻고 인정받을 수 있는 사회적 기술과 전략을 알려주려고 노력한다.<br/>TSR4. 나는 인기가 없는 학생들을 위해 학급에서 친구들과 함께 사이좋게 지내는 것의 중요성을 강조한다.<br/>TSR5. 나는 인기가 없는 학생을 위해, 인기있는 학생과 짝궁을 맺어주거나, 다른 친구들과 함께 공부할 수 있는 기회를 제공한다.<br/>TSR6. 나는 학급에서 또래들간의 인기의 균형을 이루도록 노력한다. (예: 다양한 학생에게 리더 역할 부여하기, 인기학생들도 다른 학생들의 안내와 지시에 따르는 기회 주기, 자리배치와 모둠과제를 활용하여 소수의 학생이 학급 분위기를 주도하지 않도록 유도하기)<br/>TSR7. 나는 학급에서 소외받고 친구가 없는 학생들이 친구를 사귈 수 있는 기회를 제공하려고 노력한다. (예: 해당 학생이 좋아하는 자리나 모둠을 선택하도록 함)<br/>TSR8. 나는 학급에서 소외받고 친구가 없는 학생들이 선호하는 또래와 친구가 될 수있도록 도와준다. (예: 소외 받은 학생이 선호하는 특정 학생(혹은 그들과 짝이 되는 것에 거부감을 가지지 않는 학생)과 짝을 지어주거나, 모둠이 되도록 함.)<br/>TSR9. 나는 학급에서 다양한 친구를 사귀는 것의 중요성을 강조하여, 소외받고 친구가 없는 학생을 보호하려고 노력한다.<br/>TSR10. 나는 학급에서 소외받고 친구가 없는 학생들이 친구를 사귀는 사회적 기술과 전략을 개발하고 연습할 수 있도록 지도한다.<br/>TSR11. 나는 문제를 일으키는 또래관계나 또래집단이 다른 친구들과 어울릴 수 있도록 학급의 환경을 조성한다. (예: 자리 배치나 모둠학습을 통해 긍정적인 또래관계 혹은 문제를 일으키는 또래를 떨어뜨려 놓음)<br/>TSR12. 나는 특정한 또래집단에서의 부정적인 또래 상호작용을 최소화 하고, 긍정적인 또래관계를 형성할 수 있도록 돕는다. (예: 친사회적 행동을 강화하거나, 문제행동을 줄일 수 있는 방법을 안내함.)<br/>TSR13. 나는 문제를 일으키는 또래들과 어울리는 학생이 학급에서 다른 친구들과 우정을 형성할 수 있도록 돕는다.<br/>TSR14. 나는 학생들의 폭력 행동 또는 또래를 괴롭히는 행동을 최소화 할 수 있도록 학급 환경을 조성한다. (예: 수업시간에 학생들을 과제에 집중시키기, 또래를 괴롭히는 학생들을 서로 떨어뜨려 놓기, 또래를 괴롭히는 학생들을 교사 가까이 두고 지켜보기)<br/>TSR15. 나는 학생들이 폭력 행동 또는 또래를 괴롭히는 행동을 할 경우 꼭 따로 불러 잘못된 행동에 대해 설명하고 주의를 준다.<br/>TSR16. 나는 또래로부터 괴롭힘을 당하는 학생들이 계속 괴롭힘을 당하지 않도록 노력한다. (예: 괴롭히는 친구와 짝이 되지 않도록 하기, 어른의 감독이 없는 상황에 혼자 있지 않도록 하기)<br/>TSR17. 나는 학생이 또래로부터 괴롭힘을 당하는 것을 발견하면 바로 개입하여 피해를 줄일 수 있도록 노력한다.<br/>TSR18. 나는 또래로부터 괴롭힘을 당하는 학생에게 괴롭힘에 효과적으로 대처하고 괴롭힘을 피할 수 있는 방법을 알려주려고 노력한다.<br/>TSR19. 나는 폭력 행동 또는 또래를 괴롭히는 행동을 하는 학생들에게 바람직한 행동을 하는 학생과 어울릴 수 있는 기회를 주어 이들로부터 좋은 영향을 받을 수 있도록 노력한다. (예: 또래를 잘 도와주는 학생과 짝이 되어 앉게 하기)<br/>TSR20. 나는 폭력 행동 또는 <br/><strong>또래를 괴롭히는 행동을 하는 학생들(가해학생)</strong>에게 학급의 임무를 맡겨 다른 학생들과 잘 어울릴 수 있는 기회를 주려고 노력한다. (예: 특정 임무를 부여하기, 또래에게 좋은 인상을 줄 수 있는 기회 만들어주기)<br/>TSR21. 나는 폭력 행동 또는 또래를 괴롭히는 행동을 하는 학생들이 바람직한 행동을 배울 수 있도록 돕는다. (예: 친구들과 잘 어울릴 수 있는 방법을 가르쳐주기, 또래에게 친절한 행동을 할 때마다 칭찬하기)<br/>TSR22. 나는 <br/><strong><span style="border-bottom:0.05em solid">또래 괴롭힘을 당하는 학생(피해학생)</span></strong>들에게 또래들이 긍정적으로 평가할만한 학급의 임무를 만들고, 수행하도록 하여 다른 학생들과 잘 어울릴 수 있는 기회를 주려고 노력한다. (예: 특정 임무를 부여하기, 또래에게 좋은 인상을 줄 수 있는 기회 만들어주기 )<br/>TSR23. 나는 또래로부터 괴롭힘을 당하는 학생들이 다른 또래들과 어울릴 수 있는 기회를 만들어주려고 노력한다. (예: 또래를 도와주는 학생과 짝이 되어 앉게 하기)                                                                                                        (TSR 1-6: 학생의 평등한 지위관리 , TSR 7-10: 소외 학생관리 , TSR 11-13: 문제행동 관리 , TSR 14-18: 공격성 관리 , TSR 19- 23: 긍정적 학급 분위기 조성   ) <br/></td><td id="WG&lt;L" class="">자기보고 (리커트 척도)</td><td id="|t}R" class="" style="width:182px">Braun, S.S., Zadzora, K.M., Miller, A.M. et al. Predicting elementary teachers’ efforts to manage social dynamics from classroom composition, teacher characteristics, and the early year peer ecology. Soc Psychol Educ 22, 795–817 (2019).</td><td id="v:fM" class="">학교수준 리포트, 교사 평균값 제공</td><td id="jn:S" class="">7</td></tr><tr id="19d94964-5066-8120-be59-f5151c382b7b"><td id="i=`h" class=""><strong>또래관계 교사 민감성</strong></td><td id="~r|r" class="" style="width:449.3125px">TR2. 이 아이는 반 아이들 사이에서 인기가 있다.<br/>TR3. 반 아이들은 이 아이와 함께 놀고 싶어한다.<br/>TR4. 이 아이는 친구들과 싸움을 시작하는 편이다.                                                                                   TR5. 이 아이는 험담을 하거나 다른 친구를 소외시킨다.<br/>TR6. 이 아이는 친구를 괴롭히는 행동을 시작한다.  <br/>TR7. 이 아이는 친구들에게 자주 놀림을 당한다.                                                                                  TR8. 이 아이는 친절하다.<br/>TR9. 이 아이는 학교에서 잘하려고 노력한다.<br/>TR10. 이 아이는 수업 시간에 기분이 좋아 보인다.<br/></td><td id="WG&lt;L" class=""><strong>학생평정 후 또래지명 점수와의 상관을 통해 산출 (리커트 척도)</strong></td><td id="|t}R" class="" style="width:182px"></td><td id="v:fM" class=""></td><td id="jn:S" class="">7</td></tr></tbody></table><p id="19d94964-5066-81ec-a2c5-dc305e402afb" class="">측정방식분류 및 유의사항</p><ul id="19d94964-5066-81f6-9aac-e2b8f30f426c" class="bulleted-list"><li style="list-style-type:disc">학생 자기보고 (SR 1- 67)</li></ul><p id="19d94964-5066-819e-b1c1-d75afc1e0812" class=""> 질문에 대한 응답을 학생 개개인이 5점 리커트 척도 [전혀 그렇지 않다 (1점) - 매우 그렇다 (5점)] 응답하는 측정방식으로, 개인내적 심리 및 학급의 특성에 대한 자신의 지각을 보고함</p><p id="19d94964-5066-815d-83e3-d7231839e5ac" class="">
+</p><p id="19d94964-5066-81e6-b2e9-de71abb1eac5" class="">예시1.  또래공동체 의식</p><figure id="19d94964-5066-81f6-b471-e0498791d2b6" class="image"><a href="Screenshot_2024-12-03_at_14.23.18.png"><img style="width:707.9375px" src="Screenshot_2024-12-03_at_14.23.18.png"/></a></figure><p id="19d94964-5066-8140-b12a-fc088089269e" class="">학생자기보고 데이터 구조</p><table id="19d94964-5066-81f9-b8ff-f3cd2243dc80" class="simple-table"><tbody><tr id="19d94964-5066-81c9-a432-c43e2f050cce"><td id="~lEe" class="">Student ID</td><td id="PW`H" class="">SR1</td><td id="FIc_" class="">SR2</td><td id="z]Ls" class="">SR3</td><td id="::Cf" class="">SR4</td></tr><tr id="19d94964-5066-81bf-8bfc-e2128216c5ac"><td id="~lEe" class="">10301</td><td id="PW`H" class="">4</td><td id="FIc_" class="">4</td><td id="z]Ls" class="">5</td><td id="::Cf" class="">3</td></tr><tr id="19d94964-5066-8113-abbc-e52e0280550a"><td id="~lEe" class="">10302</td><td id="PW`H" class="">3</td><td id="FIc_" class="">3</td><td id="z]Ls" class="">4</td><td id="::Cf" class="">4</td></tr></tbody></table><p id="19d94964-5066-819c-8b91-dffb03978ba9" class="">
+</p><ul id="19d94964-5066-81ba-8c91-ec5522532609" class="bulleted-list"><li style="list-style-type:disc">학생 또래지명 (PN 1- 13 &amp; 18-19: 평판 및 비율점수 / PN14 - 17: 또래관계 및 행렬)</li></ul><p id="19d94964-5066-8197-848e-c2524eecda35" class="">문항에 제시된 특징에 해당하는 친구를 자신을 제외하고 모두 선택하는 측정방식으로, 개별학생에 대해 또래들이 가지고 있는 지각/평판이나 또래네트워크를 보고함. </p><p id="19d94964-5066-816c-91b1-dbae9366a49c" class=""><strong>주의사항: 설문대상자를 제외한 나머지 친구들만 선택지에 나오도록 설문 시스템 구성 필요 (자기 지명을 소프트웨어적으로 예방하기)</strong></p><p id="19d94964-5066-817c-aab4-c7694223ee43" class="">
+</p><p id="19d94964-5066-8151-a3e8-f372300ab3c6" class="">예시 1. 지각된 인기 (평판, 비율점수) PN1</p><figure id="19d94964-5066-816a-8121-d35d41ffcef8" class="image"><a href="Screenshot_2024-12-03_at_14.36.56.png"><img style="width:707.984375px" src="Screenshot_2024-12-03_at_14.36.56.png"/></a></figure><p id="19d94964-5066-8123-9b3d-fb6b9a109a27" class="">
+</p><p id="19d94964-5066-8112-8b63-c3fb81c2f2de" class="">또래지명 데이터 구조 : 평판/비율점수의 경우 (예시: 지각된 인기- PN1)</p><ol type="1" id="19d94964-5066-8163-b582-f165e52e88da" class="numbered-list" start="1"><li>행렬데이터 구성 </li></ol><table id="19d94964-5066-81b1-b9ec-df37152e17f3" class="simple-table"><tbody><tr id="19d94964-5066-81c4-a1ea-fbada44e367b"><td id="BhX&gt;" class=""></td><td id="N@mk" class="">김가연</td><td id="Uvqz" class="">김가영</td><td id="cjVo" class="">김경림</td><td id="&lt;?X^" class="">김경우</td><td id="cbX}" class="">김규원</td></tr><tr id="19d94964-5066-8181-bc51-c3c8d5f477d0"><td id="BhX&gt;" class="">김가연</td><td id="N@mk" class=""></td><td id="Uvqz" class="">1</td><td id="cjVo" class="">1</td><td id="&lt;?X^" class="">1</td><td id="cbX}" class="">1</td></tr><tr id="19d94964-5066-814f-873d-d41f276fb89c"><td id="BhX&gt;" class="">김가영</td><td id="N@mk" class="">1</td><td id="Uvqz" class=""></td><td id="cjVo" class="">1</td><td id="&lt;?X^" class=""></td><td id="cbX}" class=""></td></tr><tr id="19d94964-5066-818c-8bdd-ce84fb42989d"><td id="BhX&gt;" class="">김경림</td><td id="N@mk" class="">1</td><td id="Uvqz" class="">1</td><td id="cjVo" class=""></td><td id="&lt;?X^" class=""></td><td id="cbX}" class=""></td></tr><tr id="19d94964-5066-818d-a033-d913e675d19e"><td id="BhX&gt;" class="">김경우</td><td id="N@mk" class="">1</td><td id="Uvqz" class=""></td><td id="cjVo" class="">1</td><td id="&lt;?X^" class=""></td><td id="cbX}" class=""></td></tr><tr id="19d94964-5066-8191-8b31-f0bfaca9a5e3"><td id="BhX&gt;" class="">김규원</td><td id="N@mk" class="">1</td><td id="Uvqz" class=""></td><td id="cjVo" class="">1</td><td id="&lt;?X^" class="">1</td><td id="cbX}" class=""></td></tr></tbody></table><ol type="1" id="19d94964-5066-81c5-bd6c-ccf5becc9743" class="numbered-list" start="2"><li>비율점수 데이터로 재구성 </li></ol><table id="19d94964-5066-811c-be8e-c0da643cb0bf" class="simple-table"><tbody><tr id="19d94964-5066-8190-b7a9-d4f251c67dab"><td id="}~H?" class=""></td><td id="[BKR" class="">PN1 (지각된 인기)</td><td id="CA@v" class="" style="width:167px">산출방식</td></tr><tr id="19d94964-5066-81b2-9c56-db50f18ca9aa"><td id="}~H?" class="">김가연</td><td id="[BKR" class="">1 </td><td id="CA@v" class="" style="width:167px">4/4 =1 (친구로 지명받은수/ 지명이 가능한 수 - 전체 샘플수 -1)</td></tr><tr id="19d94964-5066-8156-8a98-fd963a9c8a1c"><td id="}~H?" class="">김가영</td><td id="[BKR" class="">.5</td><td id="CA@v" class="" style="width:167px">2/4</td></tr><tr id="19d94964-5066-81ab-97db-d6defbf904cd"><td id="}~H?" class="">김경림</td><td id="[BKR" class="">1</td><td id="CA@v" class="" style="width:167px">4/4</td></tr><tr id="19d94964-5066-81f2-b1ed-c34648336ac7"><td id="}~H?" class="">김경우</td><td id="[BKR" class="">.5</td><td id="CA@v" class="" style="width:167px">2/4</td></tr><tr id="19d94964-5066-8178-88b7-cc041bf2d463"><td id="}~H?" class="">김규원</td><td id="[BKR" class="">.25</td><td id="CA@v" class="" style="width:167px">1/4</td></tr></tbody></table><p id="19d94964-5066-8145-a2d8-e9575f09d3fd" class="">
+</p><p id="19d94964-5066-8163-bf49-d8ff53f657a6" class="">예시 2. 친구네트워크 (관계, 행렬을 사용) </p><figure id="19d94964-5066-8165-966d-e45a0e2f08ae" class="image"><a href="Screenshot_2024-12-03_at_14.37.29.png"><img style="width:628px" src="Screenshot_2024-12-03_at_14.37.29.png"/></a></figure><p id="19d94964-5066-81bd-977c-edc0aff6dc0f" class="">
+</p><p id="19d94964-5066-8103-80bf-f7b434bb8723" class="">또래지명 데이터 구조 : 또래관계의 경우 (예시: 친구 네트워크)</p><table id="19d94964-5066-810c-84af-c9a43f0ca20b" class="simple-table"><tbody><tr id="19d94964-5066-8106-aa62-f7efb0dfec25"><td id="BhX&gt;" class=""></td><td id="N@mk" class="">김가연</td><td id="Uvqz" class="">김가영</td><td id="cjVo" class="">김경림</td><td id="&lt;?X^" class="">김경우</td><td id="cbX}" class="">김규원</td></tr><tr id="19d94964-5066-810a-8b86-e262ca190998"><td id="BhX&gt;" class="">김가연</td><td id="N@mk" class=""></td><td id="Uvqz" class="">1</td><td id="cjVo" class="">1</td><td id="&lt;?X^" class="">1</td><td id="cbX}" class="">1</td></tr><tr id="19d94964-5066-81a4-9789-c8ac79bb189b"><td id="BhX&gt;" class="">김가영</td><td id="N@mk" class="">1</td><td id="Uvqz" class=""></td><td id="cjVo" class="">1</td><td id="&lt;?X^" class=""></td><td id="cbX}" class=""></td></tr><tr id="19d94964-5066-81fc-b857-dff1be2d7ace"><td id="BhX&gt;" class="">김경림</td><td id="N@mk" class="">1</td><td id="Uvqz" class="">1</td><td id="cjVo" class=""></td><td id="&lt;?X^" class=""></td><td id="cbX}" class=""></td></tr><tr id="19d94964-5066-8127-829d-f8a35f3e96b9"><td id="BhX&gt;" class="">김경우</td><td id="N@mk" class="">1</td><td id="Uvqz" class=""></td><td id="cjVo" class="">1</td><td id="&lt;?X^" class=""></td><td id="cbX}" class=""></td></tr><tr id="19d94964-5066-811e-a2e6-f0864e72b430"><td id="BhX&gt;" class="">김규원</td><td id="N@mk" class="">1</td><td id="Uvqz" class=""></td><td id="cjVo" class="">1</td><td id="&lt;?X^" class="">1</td><td id="cbX}" class=""></td></tr></tbody></table><p id="19d94964-5066-81ce-995d-cfec3dfe4952" class="">행렬데이터를 사용. 이때, 행은 지명을 하는 사람, 열을 지명받는 사람을 의미하며, 지명을 하는 경우에는 1로, 지명하지 않는 경우는 0으로 표시한다. 스스로를 지명하는 경우는 오류값으로 처리하며, 설문단계에서 시스템적으로 제외하도록 한다. 지명하는 사람과 받는 사람을 고려하여, 서로의 관계가 양방향적 관계인지, 혹은 단방향인지, 관계가 존재하지 않는 지를 Sociogram으로 표시하도록 한다. </p><p id="19d94964-5066-810a-a71d-c32a645c33cb" class="">예시데이터에서 김가연 학생은 김가영, 김경림, 김경우, 김규원 학생을 친구로 지명하였고, 다른 네명의 친구들도 동일하게 김가연 학생을 친구로 지명하였다. 이 경우 상호간의 양방향의 화살표로 친구관계로 표시한다. 한편, 김경림 학생은 김규원 학생을 친구로 지명하지 않았지만, 김규원학생은 김경림학생을 친구로 지명하였으며, 이 경우는 김규원 → 김경림으로 일방적으로 관계의 화살표가 가는 것으로 표시하도록 한다. </p><p id="19d94964-5066-81ae-9640-f76ff8c63f6d" class="">
+</p><p id="19d94964-5066-811a-a6a2-ec962d7bb78a" class="">
+</p><ul id="19d94964-5066-817b-9972-ffaaca5c9e6e" class="bulleted-list"><li style="list-style-type:disc">교사 자기보고</li></ul><p id="19d94964-5066-817a-af74-c8aaff9b0c7d" class="">예시: 사회적 역동관리 전략<div class="indented"><figure id="19d94964-5066-8124-9326-fdf78bddf932" class="image"><a href="Screenshot_2024-12-03_at_14.41.34.png"><img style="width:679.984375px" src="Screenshot_2024-12-03_at_14.41.34.png"/></a></figure></div></p><p id="19d94964-5066-810b-9666-c7b9080c6f63" class=""> 질문에 대한 응답을 교사 개인이 5점 리커트 척도 [전혀 그렇지 않다 (1점) - 매우 그렇다 (5점)] 응답하는 측정방식으로, 학급 생활지도에 대한 주관적인 인식을 보고함</p><p id="19d94964-5066-81bd-954e-f7b394d288cd" class="">
+</p><p id="19d94964-5066-81c0-9dcc-c8b6c5958551" class="">교사 자기보고 데이터 구조</p><table id="19d94964-5066-8197-93ca-fbdded113296" class="simple-table"><tbody><tr id="19d94964-5066-8128-a629-c49d435634d8"><td id="~lEe" class="">Teacher ID</td><td id="PW`H" class="">TSR1</td><td id="FIc_" class="">TSR2</td><td id="z]Ls" class="">TSR3</td><td id="::Cf" class="">TSR4</td><td id="w~Kh" class="">TSR5</td></tr><tr id="19d94964-5066-81e7-9797-e76cc0b6c02f"><td id="~lEe" class="">10301</td><td id="PW`H" class="">4</td><td id="FIc_" class="">4</td><td id="z]Ls" class="">5</td><td id="::Cf" class="">3</td><td id="w~Kh" class="">4</td></tr></tbody></table><p id="19d94964-5066-81d6-a45d-ebe20da920ba" class="">
+</p><ul id="19d94964-5066-8168-ac00-d23137475367" class="bulleted-list"><li style="list-style-type:disc">교사 학생평정</li></ul><p id="19d94964-5066-811f-889b-f2ed4cd8579e" class="">예시: 교사평정 학업성취<div class="indented"><figure id="19d94964-5066-817c-948d-fd27f0c97ae1" class="image"><a href="Screenshot_2024-12-03_at_14.41.07.png"><img style="width:679.96875px" src="Screenshot_2024-12-03_at_14.41.07.png"/></a></figure></div></p><p id="19d94964-5066-814c-831b-c69f5c679b39" class="">
+</p><p id="19d94964-5066-8144-8eab-dca98075ffb5" class="">학생의 특성에 대해 교사가 개인이 5점 리커트 척도 [전혀 그렇지 않다 (1점) - 매우 그렇다 (5점)]로 평정하는 측정방식으로, 특성에 대한 또래의 생각과 교사의 생각을 비교해보기 위해 사용됨. </p><table id="19d94964-5066-81dc-8f4d-ddb908b1e669" class="simple-table"><tbody><tr id="19d94964-5066-8100-8482-f59801a9c56b"><td id="~lEe" class="">Student ID</td><td id="PW`H" class="">TR1</td><td id="FIc_" class="">TR2</td><td id="z]Ls" class="">TR3</td><td id="::Cf" class="">TR4</td><td id="w~Kh" class="">TR5</td></tr><tr id="19d94964-5066-8120-80bb-c56124886a78"><td id="~lEe" class="">10301</td><td id="PW`H" class="">4</td><td id="FIc_" class="">4</td><td id="z]Ls" class="">5</td><td id="::Cf" class="">3</td><td id="w~Kh" class="">4</td></tr><tr id="19d94964-5066-8168-82a0-df4358b10ffa"><td id="~lEe" class="">10302</td><td id="PW`H" class="">5</td><td id="FIc_" class="">4</td><td id="z]Ls" class="">3</td><td id="::Cf" class="">4</td><td id="w~Kh" class="">3</td></tr><tr id="19d94964-5066-8154-865c-f422040478bc"><td id="~lEe" class="">10303</td><td id="PW`H" class="">4</td><td id="FIc_" class="">4</td><td id="z]Ls" class="">3</td><td id="::Cf" class="">4</td><td id="w~Kh" class="">4</td></tr><tr id="19d94964-5066-8193-8f9a-c47dffd6513d"><td id="~lEe" class="">10304</td><td id="PW`H" class="">3</td><td id="FIc_" class="">4</td><td id="z]Ls" class="">4</td><td id="::Cf" class="">3</td><td id="w~Kh" class="">3</td></tr><tr id="19d94964-5066-8169-ae2b-e160a33d26dc"><td id="~lEe" class="">10305</td><td id="PW`H" class="">3</td><td id="FIc_" class="">2</td><td id="z]Ls" class="">3</td><td id="::Cf" class="">2</td><td id="w~Kh" class="">4</td></tr></tbody></table><p id="19d94964-5066-8160-bc30-d9e21028601c" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
