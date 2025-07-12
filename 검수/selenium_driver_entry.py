@@ -1,6 +1,6 @@
 from info_selenium_script import start_browser, control_browser, auto_info
 from instructions_selenium_script import auto_instructions
-from response_selenium_script import auto_point_response, auto_self_response
+from response_selenium_script import auto_point_response, auto_self_response, auto_sct_response
 import pandas as pd
 import os, sys
 

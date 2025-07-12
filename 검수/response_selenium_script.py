@@ -76,6 +76,7 @@ def auto_self_response(driver, self_item_df) : # item_df는 특정 행
         print('응답 값', response_value)
         print('응답 문항 번호', item_number+1)
         print(f'//*[@id="scroll-box"]/ul/li[{item_number+1}]/div[2]/ul/li[{response_value}]/label')
+        time.sleep(1)
         self_response_box = driver.find_element(By.XPATH, f'//*[@id="scroll-box"]/ul/li[{item_number+1}]/div[2]/ul/li[{response_value}]/label')
         actions = ActionChains(driver)
         actions.move_to_element(self_response_box).perform()
@@ -87,4 +88,22 @@ def auto_self_response(driver, self_item_df) : # item_df는 특정 행
         pass
 
 def auto_sct_response(driver, sct_item_df) :
-    pass
+    # SCT 첫번째 문항
+    sct_item_list = sct_item_df.to_list()
+    print('SCT 문항 값', sct_item_list)
+    for item_number in range(len(sct_item_list)) :
+        response_value = sct_item_list[item_number]
+        print('응답 값', response_value)
+        print('응답 문항 번호', item_number+1)
+        print(f'//*[@id="scroll-box"]/ul/li[{item_number+1}]/div/h1/input')
+        time.sleep(2)
+        sct_response_box = driver.find_element(By.XPATH, f'//*[@id="scroll-box"]/ul/li[{item_number+1}]/div/h1/input')
+        actions = ActionChains(driver)
+        actions.move_to_element(sct_response_box).perform()
+        sct_response_box.send_keys(response_value)
+
+    if item_number+1 == len(sct_item_list) :
+        next_box = driver.find_element(By.ID, 'objectiveQuestionSubmitBtnChk')
+        next_box.click()
+    else :
+        pass
