@@ -51,6 +51,7 @@ if uploaded_file:
 
         if st.button('자동 응답 시작') :
             script_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+            print("Current script directory:", script_dir)
             os.chdir(script_dir)
             info_df.to_csv("info_temp.csv", index=False)
 
@@ -59,4 +60,5 @@ if uploaded_file:
             st.success("자동 입력을 시작합니다.")
 
 # streamlit run c:/Users/USER/peer/검수/streamlit_test.py
+# streamlit run /Users/mac/insight_/peer/검수/streamlit_test.py
 # https://www.schoolfriends.co.kr/testing/loginForm/P20250708740B-AC000120256016589
