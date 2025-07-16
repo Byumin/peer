@@ -6,9 +6,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 import time
 
-import os
-import sys
-
 # 웹 드라이버 최신화
 def start_browser():
     options = webdriver.ChromeOptions()
@@ -34,17 +31,22 @@ def auto_point_response(driver, info_selected_fields, row_i, info_df, point_item
         for n in range(len(point_item_df)) :
             print('응답 정보\n', point_item_df)
             print('디버깅용', point_item_df.iloc[n]) # 시리즈는 하나의 인덱스만 사용
-            point_name_list = [name.strip() for name in point_item_df.iloc[n].split(',')]
-            print(point_name_list)
-            temp_no_list = []
-            for name in point_name_list :
-                student_number = student_name_list.index(name) + 1
-                print(f"{name} → {student_number}")
-                temp_no_list.append(student_number)
-            print('name -> student_number 변환',temp_no_list)
-            point_student_number_list.append(temp_no_list)
+
+            if pd.isna(point_item_df.iloc[n]) : # 지명이 null인 경우
+                print(f'{n+1}번째 지명 문항은 응답이 없습니다.')
+                point_student_number_list.append([len(info_df)])
+            else :
+                point_name_list = [name.strip() for name in point_item_df.iloc[n].split(',')]
+                print(point_name_list)
+                temp_no_list = []
+                for name in point_name_list :
+                    student_number = student_name_list.index(name) + 1
+                    print(f"{name} → {student_number}")
+                    temp_no_list.append(student_number)
+                print('name -> student_number 변환',temp_no_list)
+                point_student_number_list.append(temp_no_list)
         print(point_student_number_list)
-        
+
         # 지명 문항 응답
         for item_number, point_number_list in enumerate(point_student_number_list) :
             print(point_number_list)

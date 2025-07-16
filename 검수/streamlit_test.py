@@ -10,6 +10,11 @@ if uploaded_file:
     df = pd.read_excel(uploaded_file)
     col = df.columns.tolist()
 
+    # 특정 행부터 시작하기 위해 행 index를 선택할 수 있는 옵션 추가
+    start_row_idx_display = st.selectbox("시작할 행의 인덱스를 선택하세요 (엑셀 기준)", options=list(range(1, len(df)+1)), index=0)
+    start_row_idx = start_row_idx_display - 1 
+    
+
     info_selected_fields = st.multiselect("인적사항으로 사용할 열 선택", col)
     st.write("선택된 인적사항 필드:", info_selected_fields)
     point_item_start_field = st.selectbox("지명 문항이 시작되는 열 선택", col)
@@ -26,19 +31,19 @@ if uploaded_file:
     sct_item_start_index = col.index(sct_item_start_field)
 
     if info_selected_fields:
-        info_df = df[info_selected_fields]
+        info_df = df.loc[df.index[start_row_idx]:, info_selected_fields]
         info_df.to_csv("info_temp.csv", index=False ,encoding="utf-8-sig")
         st.write("✅ 인적사항 미리보기")
         st.dataframe(info_df.head())
     
     if point_item_start_field :
-        point_item_df = df.iloc[:, point_item_start_index:self_item_start_index]
+        point_item_df = df.iloc[start_row_idx:, point_item_start_index:self_item_start_index]
         point_item_df.to_csv("point_item_temp.csv", index=False, encoding="utf-8-sig")
         st.write("✅ 문항 미리보기")
         st.dataframe(point_item_df.head())
 
     if self_item_start_field :
-        self_item_df = df.iloc[:, self_item_start_index:sct_item_start_index]
+        self_item_df = df.iloc[start_row_idx:, self_item_start_index:sct_item_start_index]
         self_item_df.to_csv("self_item_temp.csv", index=False, encoding="utf-8-sig")
         st.write("✅ 문항 미리보기")
         st.dataframe(self_item_df.head())
@@ -61,4 +66,4 @@ if uploaded_file:
 
 # streamlit run c:/Users/USER/peer/검수/streamlit_test.py
 # streamlit run /Users/mac/insight_/peer/검수/streamlit_test.py
-# https://www.schoolfriends.co.kr/testing/loginForm/P20250708740B-AC000120256016589
+# https://www.schoolfriends.co.kr/testing/loginForm/P20250716BE86-AC000120256042D2E
