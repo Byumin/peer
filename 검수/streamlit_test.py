@@ -31,19 +31,19 @@ if uploaded_file:
     sct_item_start_index = col.index(sct_item_start_field)
 
     if info_selected_fields:
-        info_df = df.loc[df.index[start_row_idx]:, info_selected_fields]
+        info_df = df[info_selected_fields]
         info_df.to_csv("info_temp.csv", index=False ,encoding="utf-8-sig")
         st.write("✅ 인적사항 미리보기")
         st.dataframe(info_df.head())
     
     if point_item_start_field :
-        point_item_df = df.iloc[start_row_idx:, point_item_start_index:self_item_start_index]
+        point_item_df = df.iloc[:, point_item_start_index:self_item_start_index]
         point_item_df.to_csv("point_item_temp.csv", index=False, encoding="utf-8-sig")
         st.write("✅ 문항 미리보기")
         st.dataframe(point_item_df.head())
 
     if self_item_start_field :
-        self_item_df = df.iloc[start_row_idx:, self_item_start_index:sct_item_start_index]
+        self_item_df = df.iloc[:, self_item_start_index:sct_item_start_index]
         self_item_df.to_csv("self_item_temp.csv", index=False, encoding="utf-8-sig")
         st.write("✅ 문항 미리보기")
         st.dataframe(self_item_df.head())
@@ -61,7 +61,8 @@ if uploaded_file:
             info_df.to_csv("info_temp.csv", index=False)
 
             info_selected_fields_str = ",".join(info_selected_fields)
-            subprocess.Popen(["python", "selenium_driver_entry.py", url, info_selected_fields_str]) # subprocess.Popen() 문자열만 인자로 받기 때문에 리스트를 str로 변환해야함.
+            start_row_idx = str(start_row_idx)
+            subprocess.Popen(["python", "selenium_driver_entry.py", url, info_selected_fields_str, start_row_idx]) # subprocess.Popen() 문자열만 인자로 받기 때문에 리스트를 str로 변환해야함.
             st.success("자동 입력을 시작합니다.")
 
 # streamlit run c:/Users/USER/peer/검수/streamlit_test.py

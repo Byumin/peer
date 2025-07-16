@@ -6,7 +6,8 @@ import pandas as pd
 import os, sys
 import time
 
-def driver_entry(filename_info, filename_point_item, filename_self_item, filename_sct_item, url, info_selected_fields_str):
+def driver_entry(filename_info, filename_point_item, filename_self_item, filename_sct_item, url, info_selected_fields_str, start_row_idx):
+    start_row_idx = int(start_row_idx)  # 시작 행 인덱스 변환
     # 작업 디렉토리 설정
     script_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
     os.chdir(script_dir)
@@ -14,18 +15,20 @@ def driver_entry(filename_info, filename_point_item, filename_self_item, filenam
     info_selected_fields = info_selected_fields_str.split(',')
 
     info_df = pd.read_csv(filename_info, encoding="utf-8-sig")
+    info_total_df = pd.read_csv("info_total_temp.csv", encoding="utf-8-sig")
     point_item_df = pd.read_csv(filename_point_item, encoding="utf-8-sig")
     self_item_df = pd.read_csv(filename_self_item, encoding="utf-8-sig")
     sct_item_df = pd.read_csv(filename_sct_item, encoding="utf-8-sig")
 
     driver = start_browser()
 
-    for row_i in range(len(info_df)) :
+    for row_i in range(start_row_idx, len(info_df)) :
+        print(f'현재 행 번호: {row_i+1}')
         time.sleep(1)
         control_browser(driver, url)
         auto_info(driver, info_selected_fields, info_df.iloc[row_i,:])
         auto_instructions(driver)
-        auto_point_response(driver, info_selected_fields, row_i, info_df, point_item_df.iloc[row_i,:])
+        auto_point_response(driver, info_selected_fields, row_i, info_total_df, point_item_df.iloc[row_i,:])
         auto_self_response(driver, self_item_df.iloc[row_i,:])
         time.sleep(1)
         auto_sct_response(driver, sct_item_df.iloc[row_i,:])
@@ -35,4 +38,4 @@ def driver_entry(filename_info, filename_point_item, filename_self_item, filenam
 
 
 if __name__ == "__main__":
-    driver_entry('info_temp.csv', 'point_item_temp.csv', 'self_item_temp.csv', 'sct_item_temp.csv', sys.argv[1], sys.argv[2])
+    driver_entry('info_temp.csv', 'point_item_temp.csv', 'self_item_temp.csv', 'sct_item_temp.csv', sys.argv[1], sys.argv[2], sys.argv[3])
