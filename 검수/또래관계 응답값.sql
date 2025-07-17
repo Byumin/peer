@@ -13,7 +13,7 @@ WHERE
 	AND A.TARGET_CODE = C.STUDENT_CODE
 	AND B.STUDENT_CODE = D.STUDENT_CODE
 	AND A.PSY_CODE = 'P2025052995C9'
-	AND A.CLASS_CODE = 'AC000120253047CE9'
+	AND A.CLASS_CODE = 'AC000120256042D2E'
 	AND A.PSY_TARGET = 'STUDENT';	
 -- 또래지명----------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ WHERE
 	A.USER_TESTING_NO = B.USER_TESTING_NO
 	AND A.TARGET_CODE = C.STUDENT_CODE
 	AND A.PSY_CODE = 'P2025052995C9'
-	AND A.CLASS_CODE = 'AC000120253047CE9'
+	AND A.CLASS_CODE = 'AC000120256042D2E'
 	AND A.PSY_TARGET = 'STUDENT';
 -- 자기보고----------------------------------------------------------------------	
 
@@ -44,7 +44,7 @@ WHERE
 	A.USER_TESTING_NO = B.USER_TESTING_NO
 	AND A.TARGET_CODE = C.STUDENT_CODE
 	AND A.PSY_CODE = 'P2025052995C9'
-	AND A.CLASS_CODE = 'AC000120253047CE9'
+	AND A.CLASS_CODE = 'AC000120256042D2E'
 	AND A.PSY_TARGET = 'STUDENT';
 -- 문장완성----------------------------------------------------------------------	
 
@@ -61,7 +61,7 @@ WHERE
 	A.USER_TESTING_NO = B.USER_TESTING_NO
 	AND B.STUDENT_CODE = C.STUDENT_CODE
 	AND A.PSY_CODE = 'P2025052995C9'
-	AND A.CLASS_CODE = 'AC000120253047CE9'
+	AND A.CLASS_CODE = 'AC000120256042D2E'
 	AND A.PSY_TARGET = 'TEACHER';		
 -- 학생평가----------------------------------------------------------------------	
 
@@ -72,7 +72,7 @@ FROM psy_target_detail A, at_user_testing_paper B
 WHERE 
 	A.USER_TESTING_NO = B.USER_TESTING_NO
 	AND A.PSY_CODE = 'P2025052995C9'
-	AND A.CLASS_CODE = 'AC000120253047CE9'
+	AND A.CLASS_CODE = 'AC000120256042D2E'
 	AND A.PSY_TARGET = 'TEACHER';	
 -- 자기보고----------------------------------------------------------------------	
 
