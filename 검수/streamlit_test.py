@@ -67,4 +67,4 @@ if uploaded_file:
 
 # streamlit run c:/Users/USER/peer/검수/streamlit_test.py
 # streamlit run /Users/mac/insight_/peer/검수/streamlit_test.py
-# https://www.schoolfriends.co.kr/testing/loginForm/P20250716BE86-AC000120256042D2E
+# https://www.schoolfriends.co.kr/testing/loginForm/P20250718B4BE-AC000120255019FA1

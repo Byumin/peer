@@ -15,7 +15,7 @@ def driver_entry(filename_info, filename_point_item, filename_self_item, filenam
     info_selected_fields = info_selected_fields_str.split(',')
 
     info_df = pd.read_csv(filename_info, encoding="utf-8-sig")
-    info_total_df = pd.read_csv("info_total_temp.csv", encoding="utf-8-sig")
+    #info_total_df = pd.read_csv("info_total_temp.csv", encoding="utf-8-sig")
     point_item_df = pd.read_csv(filename_point_item, encoding="utf-8-sig")
     self_item_df = pd.read_csv(filename_self_item, encoding="utf-8-sig")
     sct_item_df = pd.read_csv(filename_sct_item, encoding="utf-8-sig")
@@ -28,7 +28,7 @@ def driver_entry(filename_info, filename_point_item, filename_self_item, filenam
         control_browser(driver, url)
         auto_info(driver, info_selected_fields, info_df.iloc[row_i,:])
         auto_instructions(driver)
-        auto_point_response(driver, info_selected_fields, row_i, info_total_df, point_item_df.iloc[row_i,:])
+        auto_point_response(driver, info_selected_fields, row_i, info_df, point_item_df.iloc[row_i,:])
         auto_self_response(driver, self_item_df.iloc[row_i,:])
         time.sleep(1)
         auto_sct_response(driver, sct_item_df.iloc[row_i,:])

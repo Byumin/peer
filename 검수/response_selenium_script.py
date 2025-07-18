@@ -24,9 +24,9 @@ def auto_point_response(driver, info_selected_fields, row_i, info_df, point_item
 
     try :
         # 학생 이름 -> 학급 번호 변환
-        학생 이름_list = info_df[info_selected_fields[1]].to_list()
-        학생 이름_list.remove(info_df.iloc[row_i, :][info_selected_fields[1]])
-        print('본인을 제외한 학생 명단\n', 학생 이름_list)
+        student_name_list = info_df[info_selected_fields[1]].to_list()
+        student_name_list.remove(info_df.iloc[row_i, :][info_selected_fields[1]])
+        print('본인을 제외한 학생 명단\n', student_name_list)
         point_student_number_list = []
         for n in range(len(point_item_df)) :
             print('응답 정보\n', point_item_df)
@@ -40,7 +40,7 @@ def auto_point_response(driver, info_selected_fields, row_i, info_df, point_item
                 print(point_name_list)
                 temp_no_list = []
                 for name in point_name_list :
-                    student_number = 학생 이름_list.index(name) + 1
+                    student_number = student_name_list.index(name) + 1
                     print(f"{name} → {student_number}")
                     temp_no_list.append(student_number)
                 print('name -> student_number 변환',temp_no_list)
