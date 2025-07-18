@@ -2,11 +2,11 @@
 
 -- 또래지명----------------------------------------------------------------------
 SELECT 
-	CAST(AES_DECRYPT( UNHEX(C.STUDENT_NAME), 'ehfhtl2015') AS CHAR) AS '지명한 학생',
+	CAST(AES_DECRYPT( UNHEX(C.학생 이름), 'ehfhtl2015') AS CHAR) AS '지명한 학생',
 	C.STUDENT_NUM '학번',
 	CASE WHEN C.STUDENT_SEX = 1 THEN '남' ELSE '여' END  '성별',
 	B.QUESTION_NO '문항번호',
-	CAST(AES_DECRYPT( UNHEX(D.STUDENT_NAME), 'ehfhtl2015') AS CHAR) AS '지명받은 학생'
+	CAST(AES_DECRYPT( UNHEX(D.학생 이름), 'ehfhtl2015') AS CHAR) AS '지명받은 학생'
 FROM psy_target_detail A, at_user_testing_paper_pn B, school_student C, school_student D
 WHERE 
 	A.USER_TESTING_NO = B.USER_TESTING_NO
@@ -19,7 +19,7 @@ WHERE
 
 -- 자기보고----------------------------------------------------------------------
 SELECT 
-	CAST(AES_DECRYPT( UNHEX(C.STUDENT_NAME), 'ehfhtl2015') AS CHAR) AS STUDENT_NAME,
+	CAST(AES_DECRYPT( UNHEX(C.학생 이름), 'ehfhtl2015') AS CHAR) AS 학생 이름,
 	C.STUDENT_NUM '학번',
 	CASE WHEN C.STUDENT_SEX = 1 THEN '남' ELSE '여' END  '성별',
 	B.PAPER_JSON '응답값'
@@ -34,7 +34,7 @@ WHERE
 
 -- 문장완성----------------------------------------------------------------------	
 SELECT 
-	CAST(AES_DECRYPT( UNHEX(C.STUDENT_NAME), 'ehfhtl2015') AS CHAR) AS '학생명',
+	CAST(AES_DECRYPT( UNHEX(C.학생 이름), 'ehfhtl2015') AS CHAR) AS '학생 이름',
 	C.STUDENT_NUM '학번',
 	CASE WHEN C.STUDENT_SEX = 1 THEN '남' ELSE '여' END  '성별',
 	B.QUESTION_NO '문항번호',
@@ -53,7 +53,7 @@ WHERE
 -- 선생 ------------------------------------------------------------------------
 -- 학생평가----------------------------------------------------------------------	
 SELECT  
-	CAST(AES_DECRYPT(UNHEX(C.STUDENT_NAME), 'ehfhtl2015') AS CHAR) AS '학생명',
+	CAST(AES_DECRYPT(UNHEX(C.학생 이름), 'ehfhtl2015') AS CHAR) AS '학생 이름',
 	B.QUESTION_NO AS '문항번호',
 	B.SELECT_DATA AS '응답값'
 FROM psy_target_detail A, at_user_testing_paper_tr B, school_student C
