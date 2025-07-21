@@ -36,7 +36,7 @@ url = st.text_input("자동 입력에 사용할 URL을 입력하세요")
 # 드라이버 실행 버튼
 # session_state에 driver 초기화
 if "driver" not in st.session_state:
-    st.session_state.driver = None
+    st.session_state['driver'] = None
 
 # 브라우저 실행 버튼
 if st.button("브라우저 실행"):
@@ -44,7 +44,7 @@ if st.button("브라우저 실행"):
         st.warning("URL을 먼저 입력하세요.")
     else:
         from start_driver import launch_browser
-        st.session_state.driver = launch_browser(url)
+        st.session_state['driver'] = launch_browser(url)
         st.success("브라우저가 실행되었습니다. 검사 페이지로 직접 이동하세요.")
 
 # 엑셀 업로드 시 처리
@@ -70,13 +70,27 @@ if uploaded_file:
     first_items_start_field = st.selectbox("첫 번째 문항단이 시작되는 열 선택", col)
     first_items_start_index = col.index(first_items_start_field)
 
+
+    # ! [모듈 시험 순서 정의 - 단일선 중복 허용하게 변경] - 리펙토리
+    st.subheader("모듈 실행 순서 정의")
+    st.session_state.setdefault("module_flow", []) # session_state는 사용자가 버튼을 누르거나 페이즈를 다시 그려도 값이 유지됨. setdefault는 module_flow 키가 없을 경우 빈리스트로 초기화
+    new_module = st.selectbox("모듈 순서 설정", list(available_modules.keys()))
+    if st.button("순서 설정"):
+        st.session_state["module_flow"].append(new_module)
+
+    # ! [선택된 모듈 순서 보여주기] - 리펙토리
+    if st.session_state["module_flow"]:
+        st.subheader("선택된 모듈 실행 순서")
+        for i, mod in enumerate(st.session_state["module_flow"], 1):
+            st.write(f"{i}. {mod}")
+
     # 모듈 선택 및 순서 지정
-    st.subheader("모듈 선택 및 순서 지정")
-    for module_name in available_modules:
-        selected = st.checkbox(module_name, value=True)
-        if selected:
-            order = st.number_input(f"{module_name} 모듈 순서", min_value=1, max_value=len(available_modules), value=1)
-            module_selection.append((order, module_name))
+    #st.subheader("모듈 선택 및 순서 지정")
+    #for module_name in available_modules:
+        #selected = st.checkbox(module_name, value=True)
+        #if selected:
+            #order = st.number_input(f"{module_name} 모듈 순서", min_value=1, max_value=len(available_modules), value=1)
+            #module_selection.append((order, module_name))
 
     # 유효성 검사
     if info_selected_fields and info_xpath_list:
@@ -108,6 +122,7 @@ if uploaded_file:
             st.success("자동 응답을 시작합니다!")
 
             # csv 저장
+            df['BIRTHDAY'] = pd.to_datetime(df['BIRTHDAY'], errors='coerce')
             df[info_selected_fields].to_csv("info_df_temp.csv", index=False, encoding="utf-8-sig")
             df.iloc[:, first_items_start_index:].to_csv("self_df_temp.csv", index=False, encoding="utf-8-sig")
 
@@ -134,7 +149,7 @@ if uploaded_file:
                 context["info_df_row"] = context["info_df_all"].iloc[[row_idx]]
                 context["self_df_row"] = context["self_df_all"].iloc[[row_idx]]
                 # 정렬된 순서로 모듈 실행
-                for _, module_name in module_selection:
+                for module_name in st.session_state["module_flow"]:
                     module_path = available_modules[module_name]
                     print(f"실행할 모듈: {module_name} ({module_path})")
                     try:
@@ -143,6 +158,7 @@ if uploaded_file:
                         module.run(context) # 모듈의 run(context) 함수를 실행
                     except Exception as e:
                         st.error(f"{module_name} 실행 중 오류: {e}")
+                        st.stop()
 else:
     st.warning("엑셀 파일을 먼저 업로드하세요.")
 
