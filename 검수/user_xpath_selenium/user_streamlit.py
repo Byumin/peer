@@ -1,12 +1,14 @@
 import streamlit as st
 import pandas as pd
 import importlib
+from selenium.webdriver.common.by import By
 
 # 모듈 목록 정의
 available_modules = {
     "인적사항": "auto_info",
     "자기보고": "auto_self",
-    "알럿": "auto_alert",
+    "일반 알럿": "auto_alert",
+    "특정 알럿": "auto_specific_alert"
 }
 
 import sys
@@ -83,6 +85,19 @@ if uploaded_file:
         st.subheader("선택된 모듈 실행 순서")
         for i, mod in enumerate(st.session_state["module_flow"], 1):
             st.write(f"{i}. {mod}")
+    if "자기보고" in st.session_state["module_flow"]:
+        st.subheader("자기보고 xpath 패턴 설정")
+        item_start_idx = st.number_input("item_index 시작", min_value=0, value=0, key="start_idx")
+        item_idx_step = st.number_input("item_index 간격", min_value=1, value=1, key="step")
+        value_offset = st.text_input("item_value 오프셋", value="0", key="offset")
+    if "특정 알럿" in st.session_state["module_flow"]:
+        st.subheader("특정 알럿 xpath 설정")
+        specific_alert_xpath = st.text_input("특정 알럿 xpath를 입력하세요", value="//*[@id='modal3']/div/div[2]/a[2]")
+        if specific_alert_xpath:
+            st.session_state["specific_alert_xpath"] = specific_alert_xpath
+        else:
+            st.session_state["specific_alert_xpath"] = None
+
 
     # 모듈 선택 및 순서 지정
     #st.subheader("모듈 선택 및 순서 지정")
@@ -116,7 +131,7 @@ if uploaded_file:
             st.error("XPath 개수와 필드 수가 맞지 않습니다.")
         elif not self_xpath:
             st.error("자기보고 XPath를 입력하세요.")
-        elif not module_selection:
+        elif not st.session_state["module_flow"]:
             st.error("모듈을 선택하세요.")
         else:
             st.success("자동 응답을 시작합니다!")
@@ -135,6 +150,9 @@ if uploaded_file:
                 "info_dict": info_dict,
                 "self_df_all": pd.read_csv("self_df_temp.csv"),
                 "self_xpath": self_xpath,
+                "item_start_idx": item_start_idx,
+                "item_idx_step": item_idx_step,
+                "value_offset": value_offset
             }
 
             # 모듈 순서 정렬
@@ -159,6 +177,9 @@ if uploaded_file:
                     except Exception as e:
                         st.error(f"{module_name} 실행 중 오류: {e}")
                         st.stop()
+                st.success("모든 모듈이 성공적으로 실행되었습니다!")
+                next_case = st.session_state.driver.find_element(By.XPATH, "/html/body/div/div/div/div/div[3]/a[1]")
+                next_case.click()  # 다음 케이스로 이동
 else:
     st.warning("엑셀 파일을 먼저 업로드하세요.")
 
