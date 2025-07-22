@@ -59,6 +59,18 @@ def run(context):
                 dropdown_element = driver.find_element(By.XPATH, xpath)
                 dropdown_element = Select(dropdown_element)
                 dropdown_element.select_by_visible_text(region)
+            elif field == 'AFFILIATION' : 
+                print(f"소속 입력: {field}, XPath: {xpath}")
+                affiliation = info_df[field].iloc[0]
+                affiliation_element = driver.find_element(By.XPATH, xpath)
+                affiliation_element = Select(affiliation_element)
+                affiliation_element.select_by_visible_text(affiliation)
+            elif field == 'GRADE' :
+                print(f"학년 입력: {field}, XPath: {xpath}")
+                grade = info_df[field].iloc[0]
+                grade_element = driver.find_element(By.XPATH, xpath)
+                grade_element = Select(grade_element)
+                grade_element.select_by_visible_text(grade)
             else :
                 print(f"입력할 필드: {field}, XPath: {xpath}")
                 element = driver.find_element(By.XPATH, xpath)
