@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import importlib
 from selenium.webdriver.common.by import By
+import time
 
 # 모듈 목록 정의
 available_modules = {
@@ -94,9 +95,9 @@ if uploaded_file:
         st.subheader("특정 알럿 xpath 설정")
         specific_alert_xpath = st.text_input("특정 알럿 xpath를 입력하세요", value="//*[@id='modal3']/div/div[2]/a[2]")
         if specific_alert_xpath:
-            st.session_state["specific_alert_xpath"] = specific_alert_xpath
+            st.write("특정 알럿 xpath가 설정되었습니다.")
         else:
-            st.session_state["specific_alert_xpath"] = None
+            st.warning("특정 알럿 xpath를 입력하세요.")
 
 
     # 모듈 선택 및 순서 지정
@@ -152,7 +153,8 @@ if uploaded_file:
                 "self_xpath": self_xpath,
                 "item_start_idx": item_start_idx,
                 "item_idx_step": item_idx_step,
-                "value_offset": value_offset
+                "value_offset": value_offset,
+                "specific_alert_xpath": specific_alert_xpath
             }
 
             # 모듈 순서 정렬
@@ -178,8 +180,10 @@ if uploaded_file:
                         st.error(f"{module_name} 실행 중 오류: {e}")
                         st.stop()
                 st.success("모든 모듈이 성공적으로 실행되었습니다!")
-                next_case = st.session_state.driver.find_element(By.XPATH, "/html/body/div/div/div/div/div[3]/a[1]")
+                time.sleep(2)
+                next_case = context["driver"].find_element(By.XPATH, "/html/body/div/div/div/div/div[3]/a[1]")
                 next_case.click()  # 다음 케이스로 이동
+                context["driver"].switch_to.alert.accept()
 else:
     st.warning("엑셀 파일을 먼저 업로드하세요.")
 

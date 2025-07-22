@@ -21,15 +21,12 @@ def run(context):
     driver.switch_to.window(window_handle)
     print("현재 창 핸들로 전환:", window_handle)  # Debugging line
 
-    print("self_df_row:", self_df)  # Debugging line
-    print("self_xpath:", self_xpath_row)  # Debugging line 인자 잘 받는지
 
     row = self_df.iloc[0].to_list()
     # row의 각 원소값에 value_offset을 적용
     row = [str(int(value) + value_offset) for value in row]
     # item_start_idx, item_idx_step을 적용해 item_idx 생성
     item_idx = [item_start_idx + i * item_idx_step for i in range(len(row))]
-    print(f"item_idx: {item_idx}")  # Debugging line
     for item_idx, item_value in zip(item_idx, row):
         print(f"자기보고 항목 {item_idx}: {item_value}")
         # //*[@id="test-area"]/div/ul/li[{0}]/div[2]/ul/li[{1}]/label
@@ -46,7 +43,7 @@ def run(context):
             st.error(f"XPath 오류: {self_xpath} - {e}")
             st.stop()
     try :
-        next_button_xpath = '//*[@id="objectiveQuestionSubmitBtnChk"]'
+        next_button_xpath = '//*[@id="test-control"]/div/div[3]'
         next_button = driver.find_element(By.XPATH, next_button_xpath)
         next_button.click()  # 다음 버튼 클릭
     except Exception as e:

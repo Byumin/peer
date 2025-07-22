@@ -1,5 +1,7 @@
+from selenium import webdriver
+
 def run(context):
-    print("알럿창 닫기 모듈 실행")
+    print("검사안내 모듈 실행")
     driver = context["driver"]
 
     # 검사 실시 화면 통제 전환 
@@ -9,4 +11,5 @@ def run(context):
     driver.switch_to.window(window_handle)
     print("현재 창 핸들로 전환:", window_handle)  # Debugging line
 
-    driver.switch_to.alert.accept()
+    next_button_xpath = driver.find_element(By.ID, 'submitBtn')
+    next_button_xpath.click()
