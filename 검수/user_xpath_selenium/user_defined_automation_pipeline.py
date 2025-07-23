@@ -78,36 +78,35 @@ with tabs[2]:
     
     # 자기보고 XPath 설정
     if "자기보고" in st.session_state["module_flow"]:
+        st.divider()
         st.subheader("자기보고 XPath 및 패턴 설정")
         self_xpath_raw = st.text_input("자기보고 xpath를 입력하세요")
         item_start_idx = st.number_input("item_index 시작", min_value=0, value=0, key="start_idx")
         item_idx_step = st.number_input("item_index 간격", min_value=1, value=1, key="step")
         value_offset = st.text_input("item_value 오프셋", value="0", key="offset")
-
+        # 자기보고 시작 열 선택
         st.subheader("자기보고 시작되는 열 선택")
         self_item_start_col = st.selectbox("첫 번째 문항단이 시작되는 열 선택", cols)
         self_item_start_index = cols.index(self_item_start_col)
         st.session_state["self_item_start_idx"] = self_item_start_index # 자기보고가 시작되는 열
-
-        if all([self_xpath_raw, item_start_idx, item_idx_step, value_offset]):
+        # 자기보고 제출 버튼 XPath 설정
+        st.subheader("자기보고 제출(다음) 버튼 XPath 설정")
+        self_next_button_xpath = st.text_input("자기보고 제출 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]')
+        # 자기보고 XPath 및 패턴 유휴성
+        if all([self_xpath_raw, item_start_idx, item_idx_step, value_offset, self_next_button_xpath]):
             st.session_state["self_xpath"] = self_xpath_raw.strip() # 패턴, 자기보고 XPath
             st.session_state["item_start_idx"] = item_start_idx # 패턴, 자기보고 item index 시작
             st.session_state["item_idx_step"] = item_idx_step # 패턴, 자기보고 item index 간격
             st.session_state["value_offset"] = value_offset # 패턴, 자기보고 item value 오프셋
+            st.session_state["self_next_button_xpath"] = self_next_button_xpath # 자기보고 제출 버튼 XPath
             st.success("자기보고 xpath 및 패턴 설정되었습니다.")
         else:
             st.warning("xpath 및 패턴을 입력하세요.")
-        st.subheader("자기보고 제출(다음) 버튼 XPath 설정")
-        self_next_button_xpath = st.text_input("자기보고 제출 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]')
-        if self_next_button_xpath:
-            st.session_state["self_next_button_xpath"] = self_next_button_xpath
-            st.success("자기보고 제출 버튼 xpath가 설정되었습니다.")
-        else:
-            st.warning("자기보고 제출 버튼 xpath를 입력하세요.")
 
     if "특정 알럿" in st.session_state["module_flow"]:
+        st.divider()
         st.subheader("특정 알럿 XPath 설정")
-        specific_alert_xpath = st.text_input("특정 알럿 xpath를 입력하세요", value="//*[@id='modal3']/div/div[2]/a[2]")
+        specific_alert_xpath = st.text_input("특정 알럿 xpath를 입력하세요")
         if specific_alert_xpath:
             st.session_state["specific_alert_xpath"] = specific_alert_xpath
             st.success("특정 알럿 xpath가 설정되었습니다.")
@@ -178,5 +177,5 @@ with tabs[3]:
             st.success("모든 모듈이 성공적으로 실행되었습니다!")
 
 # streamlit run c:/Users/USER/peer/검수/user_xpath_selenium/user_defined_automation_pipeline.py
-# streamlit run /Users/mac/insight_/peer/검수/user_xpath_selenium/user_streamlit.py
+# streamlit run /Users/mac/insight_/peer/검수/user_xpath_selenium/user_defined_automation_pipeline.py
 # https://inpsyt.co.kr/login

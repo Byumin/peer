@@ -13,6 +13,7 @@ def run(context):
     item_start_idx = int(context["item_start_idx"])
     item_idx_step = int(context["item_idx_step"])
     value_offset = int(context["value_offset"])
+    self_next_button_xpath = context["self_next_button_xpath"]
 
     # 검사 실시 화면 통제 전환 
     window = driver.window_handles
@@ -43,8 +44,7 @@ def run(context):
             st.error(f"XPath 오류: {self_xpath} - {e}")
             st.stop()
     try :
-        next_button_xpath = '//*[@id="test-control"]/div/div[3]'
-        next_button = driver.find_element(By.XPATH, next_button_xpath)
+        next_button = driver.find_element(By.XPATH, self_next_button_xpath)
         next_button.click()  # 다음 버튼 클릭
     except Exception as e:
         print(f"다음 버튼 클릭 오류: {e}")
