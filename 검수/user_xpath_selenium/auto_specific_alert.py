@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+import time
 import streamlit as st
 
 def run(context):
@@ -15,6 +16,7 @@ def run(context):
         print("현재 창 핸들로 전환:", window_handle)  # Debugging line
 
         try:
+            time.sleep(1)  # 모듈 실행 간 잠시 대기
             alert_element = driver.find_element(By.XPATH, specific_alert_xpath)
             alert_element.click()
             print(f"특정 알럿창 닫기 완료: {specific_alert_xpath}")

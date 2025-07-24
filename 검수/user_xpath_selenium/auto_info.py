@@ -65,7 +65,8 @@ def run(context):
                 affiliation_element = driver.find_element(By.XPATH, xpath)
                 affiliation_element = Select(affiliation_element)
                 affiliation_element.select_by_visible_text(affiliation)
-            elif field == 'GRADE' :
+            elif field == 'GRADE' : # 여기서 오류가 발생함
+                time.sleep(1)  # 페이지 로드 대기
                 print(f"학년 입력: {field}, XPath: {xpath}")
                 grade = info_df[field].iloc[0]
                 grade_element = driver.find_element(By.XPATH, xpath)
@@ -80,6 +81,7 @@ def run(context):
             print(f"입력 실패: {field} - {e}")
             st.stop()
     # 확인 버튼 클릭
+    # ! 이 기능이 다른 모듈이랑 중복되어 들어가 있는것 같아 확인 필요함.
     actions = ActionChains(driver)
     info_next_button_1 = driver.find_element(By.ID, "submitBtn")
     actions.move_to_element(info_next_button_1).perform()

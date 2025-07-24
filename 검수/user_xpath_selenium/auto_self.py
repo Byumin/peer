@@ -13,6 +13,8 @@ def run(context):
     item_start_idx = int(context["item_start_idx"])
     item_idx_step = int(context["item_idx_step"])
     value_offset = int(context["value_offset"])
+    self_next_page_xpath = context["self_next_page_xpath"]
+    
     self_next_button_xpath = context["self_next_button_xpath"]
 
     # 검사 실시 화면 통제 전환 
