@@ -120,16 +120,21 @@ with tabs[2]:
         item_start_idx = st.number_input("item_index 시작", min_value=0, value=0, key="start_idx")
         item_idx_step = st.number_input("item_index 간격", min_value=1, value=1, key="step")
         value_offset = st.text_input("item_value 오프셋", value="0", key="offset")
-        # 페이지 처리 유무
+        # 페이지 처리 설정
         st.subheader("자기보고 페이지 처리 설정")
         self_page_num = st.number_input("자기보고 페이지 수", min_value=1, value=1, key="self_page_num")
         self_page_start_index = []
+        self_next_page_xpath = []
         for n in range(self_page_num):
             label = f"자기보고 {n+1} 페이지 시작 열 선택"
             selected_col = st.selectbox(label, cols, key=f"self_item_start_col_{n+1}")
             selected_index = cols.index(selected_col)
             self_page_start_index.append(selected_index)
-        self_next_page_xpath = st.text_input("자기보고 다음 페이지 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]/a')
+            self_next_page_xpath = st.text_input("자기보고 다음 페이지 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]/a')
+            self_next_page_dict = 
+        # 페이지 시작 열, 페이지 제출 버튼 XPath 설정
+
+
         # 자기보고 제출 버튼 XPath 설정
         st.subheader("자기보고 제출(다음) 버튼 XPath 설정")
         self_next_button_xpath = st.text_input("자기보고 제출 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]')
