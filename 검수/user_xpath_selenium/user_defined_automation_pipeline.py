@@ -24,15 +24,15 @@ with tabs[0]:
         cols = df.columns.tolist()
 
         # 특정 행부터 시작하기 위해 행 index를 선택할 수 있는 기능 추가
-        start_row_idx_display = st.selectbox("시작할 행의 인덱스를 선택하세요 (엑셀 기준)", options=list(range(1, len(df)+1)), index=0)
-        start_row_idx = start_row_idx_display - 1
+        start_row_index_display = st.selectbox("시작할 행의 인덱스를 선택하세요 (엑셀 기준)", options=list(range(1, len(df)+1)), index=0)
+        start_row_index = start_row_index_display - 1
         
         st.session_state['uploaded_df'] = df
         st.session_state['columns'] = cols
-        st.session_state['start_row_idx'] = start_row_idx
+        st.session_state['start_row_index'] = start_row_index
 
         st.success("업로드 완료, 데이터 미리보기:")
-        st.dataframe(df.iloc[start_row_idx:])
+        st.dataframe(df.iloc[start_row_index:])
 
 # ---------------------- [2] 인적사항 설정 ---------------------- #
 with tabs[1]:
@@ -211,20 +211,19 @@ with tabs[3]:
                 "version_next_button_xpath": st.session_state.get("version_next_button_xpath", ""), # 버전 선택 다음 버튼 XPath
                 "info_df_all": st.session_state.get("info_df_all", pd.DataFrame()),
                 "self_df_all": st.session_state.get("self_df_all", pd.DataFrame()),
-                "start_row_idx": st.session_state.get("start_row_idx", 0), # 시작 행 인덱스
+                "start_row_index": st.session_state.get("start_row_index", 0), # 시작 행 인덱스
                 "info_dict": st.session_state.get("info_dict", {}), # 인적사항 XPath 딕셔너리
                 "self_xpath": st.session_state.get("self_xpath", ""), # 패턴, 자기보고 XPath
-                "item_start_idx": st.session_state.get("item_start_idx", 0), # 패턴, 자기보고 시작 열
-                "item_idx_step": st.session_state.get("item_idx_step", 1), # 패턴, 자기보고 item index 간격
+                "item_start_index": st.session_state.get("item_start_index", 0), # 패턴, 자기보고 시작 열
+                "item_index_step": st.session_state.get("item_index_step", 1), # 패턴, 자기보고 item index 간격
                 "value_offset": st.session_state.get("value_offset", 0), # 패턴, 자기보고 item value 오프셋
-                "self_page_start_index": st.session_state.get("self_page_start_index", []), # 자기보고 페이지 시작 열 인덱스
-                "self_next_page_xpath": st.session_state.get("self_next_page_xpath", ""), # 자기보고 다음 페이지 버튼 XPath
+                "self_page_dict": st.session_state.get("self_page_dict", {}), # 자기보고 페이지 index와 XPath 딕셔너리
                 "self_next_button_xpath": st.session_state.get("self_next_button_xpath", ""), # 자기보고 제출 버튼 XPath
                 "specific_alert_xpath": st.session_state.get("specific_alert_xpath", "") # 특정 알럿 XPath
             }
 
             # 행 순서 지정
-            for row_idx in range(st.session_state['start_row_idx'], len(st.session_state['info_df_all'])):
+            for row_idx in range(st.session_state['start_row_index'], len(st.session_state['info_df_all'])):
                 context["version_df_row"] = context["version_df_all"].iloc[[row_idx]]
                 print("버전인자 확인:", context["version_df_row"])  # Debugging line
                 context["info_df_row"] = context["info_df_all"].iloc[[row_idx]]

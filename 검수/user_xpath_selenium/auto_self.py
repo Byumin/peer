@@ -1,8 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-import time
 import streamlit as st
-import pandas as pd
 from selenium.webdriver.common.action_chains import ActionChains
 
 def run(context):
