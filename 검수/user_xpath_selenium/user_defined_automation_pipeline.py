@@ -157,7 +157,7 @@ with tabs[2]:
 
         # 자기보고 제출 버튼 XPath 설정
         st.subheader("자기보고 제출(다음) 버튼 XPath 설정")
-        self_next_button_xpath = st.text_input("자기보고 제출 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]')
+        self_submit_button_xpath = st.text_input("자기보고 제출 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]')
         # 자기보고 XPath 및 패턴 유휴성
         if all([self_response_xpath_raw, self_next_page_xpath, self_page_start_index, self_next_button_xpath]):
             st.session_state["self_response_xpath"] = self_response_xpath_raw.strip() # 패턴, 자기보고 XPath
@@ -166,7 +166,7 @@ with tabs[2]:
             st.session_state["value_offset"] = int(self_value_offset) if self_value_offset.isdigit() else 0
             st.session_state["self_next_page_xpath"] = self_next_page_xpath # 자기보고 다음 페이지 버튼 XPath
             st.session_state["self_page_start_index"] = self_page_start_index # 자기보고 페이지 시작 열 인덱스
-            st.session_state["self_next_button_xpath"] = self_next_button_xpath # 자기보고 제출 버튼 XPath
+            st.session_state["self_submit_button_xpath"] = self_submit_button_xpath # 자기보고 제출 버튼 XPath
             st.session_state["self_page_dict"] = self_page_dict
             st.session_state["self_df_all"] = df.iloc[:, list(st.session_state["self_page_dict"].keys())[0]:]  # 첫 페이지의 시작 열 인덱스 기준으로 전체 데이터프레임 생성
             print("자기보고 df:", st.session_state["self_df_all"])
@@ -218,7 +218,7 @@ with tabs[3]:
                 "item_index_step": st.session_state.get("item_index_step", 1), # 패턴, 자기보고 item index 간격
                 "value_offset": st.session_state.get("value_offset", 0), # 패턴, 자기보고 item value 오프셋
                 "self_page_dict": st.session_state.get("self_page_dict", {}), # 자기보고 페이지 index와 XPath 딕셔너리
-                "self_next_button_xpath": st.session_state.get("self_next_button_xpath", ""), # 자기보고 제출 버튼 XPath
+                "self_submit_button_xpath": st.session_state.get("self_submit_button_xpath", ""), # 자기보고 제출 버튼 XPath
                 "specific_alert_xpath": st.session_state.get("specific_alert_xpath", "") # 특정 알럿 XPath
             }
 
