@@ -10,6 +10,7 @@ def run(context):
     driver = context["driver"]
     info_df = context["info_df_row"]
     info_dict = context["info_dict"]
+    info_submit_xpath = context["info_submit_xpath"]
 
     # 검사 실시 화면 통제 전환 
     window = driver.window_handles
@@ -74,21 +75,41 @@ def run(context):
                 grade_element.select_by_visible_text(grade)
             else :
                 print(f"입력할 필드: {field}, XPath: {xpath}")
-                element = driver.find_element(By.XPATH, xpath)
-                value = info_df[field].values[0]
-                element.send_keys(value)
+                if '{' in xpath:
+                    try:
+                        print("넘어 왔는지 확인")
+                        addition_xpath = xpath.format(info_df[field].values[0])
+                        print(f"추가 입력 필드 XPath: {addition_xpath}")  # Debugging line
+                        actions = ActionChains(driver)
+                        addition_element = driver.find_element(By.XPATH, addition_xpath)
+                        actions.move_to_element(addition_element).perform()
+                        addition_element.click()  # 클릭하여 입력 필드 활성화
+                    except Exception as e:
+                        print(f"클릭 입력 실패 - 필드: {field} - {e}")
+                        st.error(f"클릭 입력 실패 - 필드: {field} - {e}")
+                        st.stop()
+                        continue
+                else:
+                    try:
+                        element = driver.find_element(By.XPATH, xpath)
+                        value = info_df[field].values[0]
+                        element.send_keys(value)
+                    except Exception as e:
+                        print(f"텍스트 입력 실패 - 필드: {field} - {e}")
+                        continue
         except Exception as e:
             print(f"입력 실패: {field} - {e}")
             st.stop()
     # 확인 버튼 클릭
-    # ! 이 기능이 다른 모듈이랑 중복되어 들어가 있는것 같아 확인 필요함.
-    actions = ActionChains(driver)
-    info_next_button_1 = driver.find_element(By.ID, "submitBtn")
-    actions.move_to_element(info_next_button_1).perform()
-    info_next_button_1.click()
-    time.sleep(1) # 버튼 클릭 후 잠시 대기
-
-    info_next_button_2 = driver.find_element(By.ID, "formSubmitBtn")
-    info_next_button_2.click()
-
-    time.sleep(2)
+    print("인적사항 입력 완료, 제출 버튼 클릭")
+    print(f"인적사항 제출 버튼 XPath: {info_submit_xpath}")  # Debugging line
+    try:
+        info_submit_button = driver.find_element(By.XPATH, info_submit_xpath)
+        actions = ActionChains(driver)
+        actions.move_to_element(info_submit_button).perform()
+        info_submit_button.click()  # 클릭하여 제출
+    except Exception as e:
+        print(f"인적사항 제출 버튼 클릭 오류: {e}")
+        st.error(f"인적사항 제출 버튼 클릭 오류: {e}")
+        st.stop()
+    time.sleep(1)

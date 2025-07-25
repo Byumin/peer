@@ -44,6 +44,9 @@ with tabs[1]:
         info_xpath_str = st.text_input("각 인적사항의 XPath (콤마로 구분)")
         info_xpath_list = [x.strip() for x in info_xpath_str.split(",")] if info_xpath_str else []
 
+        info_submit_xpath = st.text_input("인적사항 제출 버튼 XPath", value='//*[@id="submitBtn"]')
+        st.session_state['info_submit_xpath'] = info_submit_xpath.strip()
+
         if info_fields and info_xpath_list:
             if len(info_fields) == len(info_xpath_list):
                 st.success("인적사항과 XPath 개수가 일치합니다.")
@@ -139,6 +142,14 @@ with tabs[2]:
             label = f"자기보고 {n+1} 페이지 시작 열 선택"
             selected_col = st.selectbox(label, cols, key=f"self_item_start_col_{n+1}")
             selected_index = cols.index(selected_col)
+            if n == 0:
+                first_index = selected_index
+                diff_index = selected_index
+            else:
+                pass
+            selected_index = int(selected_index) - diff_index # 첫문항이 시작 열이 되도록 조정
+            print(f'열 : {cols}, 선택된 열: {selected_col}, 선택된 인덱스: {selected_index}')  # Debugging line
+            print(f"선택된 자기보고 {n+1} 페이지 시작 열 인덱스:", selected_index)
             self_page_start_index.append(selected_index)
             self_next_page_xpath = st.text_input(f"자기보고 {n+1} 페이지 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]/a', key=f"self_next_page_xpath_{n+1}")
             self_next_page_xpath = self_next_page_xpath.strip() if self_next_page_xpath else ''
@@ -154,21 +165,16 @@ with tabs[2]:
         else:
             st.warning("자기보고 페이지 설정이 올바르지 않습니다. 시작 열과 다음 페이지 버튼 XPath가 일치해야 합니다.")
 
-
-        # 자기보고 제출 버튼 XPath 설정
-        st.subheader("자기보고 제출(다음) 버튼 XPath 설정")
-        self_submit_button_xpath = st.text_input("자기보고 제출 버튼 xpath를 입력하세요", value='//*[@id="nextPageBtn"]')
         # 자기보고 XPath 및 패턴 유휴성
-        if all([self_response_xpath_raw, self_next_page_xpath, self_page_start_index, self_next_button_xpath]):
-            st.session_state["self_response_xpath"] = self_response_xpath_raw.strip() # 패턴, 자기보고 XPath
+        if all([self_response_xpath_raw, self_next_page_xpath, self_page_start_index]):
+            st.session_state["self_response_xpath_raw"] = self_response_xpath_raw.strip() # 패턴, 자기보고 XPath
             st.session_state["item_start_index"] = self_item_start_index
             st.session_state["item_index_step"] = self_item_index_step
             st.session_state["value_offset"] = int(self_value_offset) if self_value_offset.isdigit() else 0
             st.session_state["self_next_page_xpath"] = self_next_page_xpath # 자기보고 다음 페이지 버튼 XPath
             st.session_state["self_page_start_index"] = self_page_start_index # 자기보고 페이지 시작 열 인덱스
-            st.session_state["self_submit_button_xpath"] = self_submit_button_xpath # 자기보고 제출 버튼 XPath
             st.session_state["self_page_dict"] = self_page_dict
-            st.session_state["self_df_all"] = df.iloc[:, list(st.session_state["self_page_dict"].keys())[0]:]  # 첫 페이지의 시작 열 인덱스 기준으로 전체 데이터프레임 생성
+            st.session_state["self_df_all"] = df.iloc[:, first_index:]  # 첫 페이지의 시작 열 인덱스 기준으로 전체 데이터프레임 생성
             print("자기보고 df:", st.session_state["self_df_all"])
             st.success("자기보고 xpath 및 패턴 설정되었습니다.")
         else:
@@ -177,9 +183,13 @@ with tabs[2]:
     if "특정알럿" in st.session_state["module_flow"]:
         st.divider()
         st.subheader("특정 알럿 XPath 설정")
-        specific_alert_xpath = st.text_input("특정 알럿 xpath를 입력하세요")
-        if specific_alert_xpath:
-            st.session_state["specific_alert_xpath"] = specific_alert_xpath
+        specific_alert_xpath_list = []
+        for n in range(st.session_state["module_flow"].count("특정알럿")):
+            specific_alert_xpath = st.text_input(f"특정 알럿 {n+1} XPath를 입력하세요", key=f"specific_alert_xpath_{n+1}")
+            specific_alert_xpath = specific_alert_xpath.strip() if specific_alert_xpath else ''
+            specific_alert_xpath_list.append(specific_alert_xpath)
+        if specific_alert_xpath_list:
+            st.session_state["specific_alert_xpath_list"] = specific_alert_xpath_list
             st.success("특정 알럿 xpath가 설정되었습니다.")
         else:
             st.warning("특정 알럿 xpath를 입력하세요.")
@@ -213,25 +223,44 @@ with tabs[3]:
                 "self_df_all": st.session_state.get("self_df_all", pd.DataFrame()),
                 "start_row_index": st.session_state.get("start_row_index", 0), # 시작 행 인덱스
                 "info_dict": st.session_state.get("info_dict", {}), # 인적사항 XPath 딕셔너리
-                "self_xpath": st.session_state.get("self_xpath", ""), # 패턴, 자기보고 XPath
+                "info_submit_xpath": st.session_state.get("info_submit_xpath", ""), # 인적사항 제출 버튼 XPath
+                "self_response_xpath_raw": st.session_state.get("self_response_xpath_raw", ""), # 패턴, 자기보고 XPath
                 "item_start_index": st.session_state.get("item_start_index", 0), # 패턴, 자기보고 시작 열
                 "item_index_step": st.session_state.get("item_index_step", 1), # 패턴, 자기보고 item index 간격
                 "value_offset": st.session_state.get("value_offset", 0), # 패턴, 자기보고 item value 오프셋
                 "self_page_dict": st.session_state.get("self_page_dict", {}), # 자기보고 페이지 index와 XPath 딕셔너리
-                "self_submit_button_xpath": st.session_state.get("self_submit_button_xpath", ""), # 자기보고 제출 버튼 XPath
-                "specific_alert_xpath": st.session_state.get("specific_alert_xpath", "") # 특정 알럿 XPath
+                "specific_alert_xpath_list": st.session_state.get("specific_alert_xpath_list", []) # 특정 알럿 XPath
             }
 
             # 행 순서 지정
             for row_idx in range(st.session_state['start_row_index'], len(st.session_state['info_df_all'])):
-                context["version_df_row"] = context["version_df_all"].iloc[[row_idx]]
-                print("버전인자 확인:", context["version_df_row"])  # Debugging line
+                if 1 <= st.session_state['module_flow'].count("버전선택"):
+                    context["version_df_row"] = context["version_df_all"].iloc[[row_idx]]
+                    print("버전인자 확인:", context["version_df_row"])  # Debugging line
+                else:
+                    pass
                 context["info_df_row"] = context["info_df_all"].iloc[[row_idx]]
                 context["self_df_row"] = context["self_df_all"].iloc[[row_idx]]
+
+                # 카운터 초기화
+                specific_alert_counter = 0
+                
                 # 모듈 순서대로 실행
                 for module_name in st.session_state["module_flow"]:
                     time.sleep(1)  # 모듈 실행 간 잠시 대기
                     module_path = available_modules[module_name]
+
+
+                    if module_name == "특정알럿":
+                        try:
+                            context["specific_alert_xpath"] = st.session_state["specific_alert_xpath_list"][specific_alert_counter]
+                            print(f"특정 알럿 XPath: {context['specific_alert_xpath']}")  # Debugging line
+                            specific_alert_counter += 1
+                        except IndexError:
+                            st.error("❌ 특정알럿 XPath 개수가 부족합니다. 모듈 수만큼 입력했는지 확인하세요.")
+                            st.stop()
+                    else:
+                        pass
                     try:
                         module = importlib.import_module(module_path)
                         module.run(context)
@@ -239,10 +268,6 @@ with tabs[3]:
                     except Exception as e:
                         st.error(f"{module_name} 실행 중 오류: {e}")
                         st.stop()
-                time.sleep(2)
-                next_case = st.session_state['driver'].find_element(By.XPATH, "/html/body/div/div/div/div/div[3]/a[1]")
-                next_case.click()  # 다음 케이스로 이동
-                st.session_state['driver'].switch_to.alert.accept()
                 time.sleep(1)
             st.success("모든 모듈이 성공적으로 실행되었습니다!")
 

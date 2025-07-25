@@ -7,6 +7,7 @@ def run(context):
         print("특정 알럿창 닫기 모듈 실행")
         driver = context["driver"]
         specific_alert_xpath = context["specific_alert_xpath"]
+        print("특정 알럿 XPath:", specific_alert_xpath)  # Debugging line
 
         # 검사 실시 화면 통제 전환
         window = driver.window_handles
