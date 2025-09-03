@@ -1,0 +1,39 @@
+"PSY_ITEM_ID","PSY_ITEM_VER","SUB_PSY_ITEM_ID","QUESTION_CODE","QUESTION_NO","REACTION_TITLE"
+PEER_RELATIONSHIP,V1.0,"20202031",PN,1,인기가 있는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,2,같이 놀고 싶은 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,3,같이 놀기 싫은 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,4,문제를 일으키는/학교의 규칙을 지키지 않는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,5,싸움을 하는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,6,다른 친구를 나쁘게 이야기 하거나 따돌리는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,7,나쁜 소문을 퍼뜨리는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,8,평소에 친절한 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,9,다른 친구를 잘 도와주고 어울리는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,10,친구를 괴롭히는 행동을 시작하는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,11,친구를 괴롭힐 때 다른 친구한테도 같이 괴롭히자고 하는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,12,다른 아이들에게 자주 놀림을 받는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,13,다른 아이들에게 맞거나 욕설을 듣는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,14,나랑 친한 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,15,평소에 나랑 같이 공부하는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,16,수업 시간에 함께 잘 도와주고 어울리는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,17,"함께 어울리거나, 친구가 되고 싶은 사람은?"
+PEER_RELATIONSHIP,V1.0,"20202031",PN,18,선생님과 잘 지내는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",PN,19,선생님과 잘 지내지 못하는 친구는?
+PEER_RELATIONSHIP,V1.0,"20202031",SCT,1,친구가 속상해 보일 때 나는 보통 {{blank}}
+PEER_RELATIONSHIP,V1.0,"20202031",SCT,2,수업 중 질문이 나오면 나는 {{blank}}
+PEER_RELATIONSHIP,V1.0,"20202031",SCT,3,수업 시간은 보통 {{blank}} 느낌이다.
+PEER_RELATIONSHIP,V1.0,"20202031",SCT,4,친구랑 함께 공부하면 나는 {{blank}}
+PEER_RELATIONSHIP,V1.0,"20202031",SCT,5,친구보다 점수가 낮으면 나는 {{blank}}
+PEER_RELATIONSHIP,V1.0,"20202031",SCT,6,실수했을 때 나는 보통 {{blank}}
+PEER_RELATIONSHIP,V1.0,"20202031",SCT,7,내가 힘들다고 말하면 부모님은 {{blank}}
+PEER_RELATIONSHIP,V2.0,"02401199",TR,1,이 학생은 주요 과목에서 학습 성취를 잘 이루고 있다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,2,이 학생은 학급 내에서 인기가 있다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,3,학급 친구들은 이 학생과 함께 놀고 싶어한다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,4,이 학생은 친구들과 싸움을 시작하는 편이다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,5,이 학생은 험담을 하거나 다른 친구를 소외시킨다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,6,이 학생은 친구를 괴롭히는 행동을 시작한다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,7,이 학생은 친구들에게 자주 놀림을 당한다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,8,이 학생은 친절하다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,9,이 학생은 학교에서 잘하려고 노력한다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,10,이 학생은 수업 시간에 기분이 좋아 보인다.
+PEER_RELATIONSHIP,V2.0,"02401199",TR,11,이 학생은 선생님과 잘 지낸다. 
+PEER_RELATIONSHIP,V2.0,"02401199",TR,12,이 학생은 선생님과 잘 지내지 못한다. 
