@@ -66,5 +66,7 @@ if uploaded_file:
             st.success("자동 입력을 시작합니다.")
 
 # streamlit run c:/Users/USER/peer/검수/streamlit_test.py
+# streamlit run C:/Users/user/workspace/peer/검수/streamlit_test.py
+
 # streamlit run /Users/mac/insight_/peer/검수/streamlit_test.py
 # https://www.schoolfriends.co.kr/testing/loginForm/P20250718B4BE-AC000120255019FA1
